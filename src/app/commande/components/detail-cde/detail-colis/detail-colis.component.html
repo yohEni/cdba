@@ -1,0 +1,159 @@
+<!-- Détail du colis -->
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h3>Détail du colis <span *ngIf="ligneCommandeClient"><strong>#{{ligneCommandeClient.ligneCommande.id}}</strong></span></h3>
+  </div>
+</div>
+<hr>
+<div class="row hidden-xs hidden-sm">
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <em>Commande crée par </em><span style="white-space: nowrap;">{{ligneCommandeClient.ligneCommande.auteurCreation}} </span>
+  </div>
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <em>le </em><span style="white-space: nowrap;">{{ligneCommandeClient.ligneCommande.dateCreation | date: 'dd/MM/yyyy HH:mm'}}</span>
+  </div>
+  <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+      <em>modifiée le {{ligneCommandeClient.ligneCommande.dateModification | date: 'dd/MM/yyyy HH:mm'}}</em>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <em>Contenu et prix</em>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <em>Infos client</em>
+  </div>
+</div>
+<br>
+<div class="row">
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <p><i class="glyphicon glyphicon-shopping-cart"></i></p>
+          </div>
+          <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+              <p>
+                <span *ngIf="!!ligneCommandeClient.ligneCommande.poidsColisReel; else poidsEstime">
+                    <strong>{{ligneCommandeClient.ligneCommande.poidsColisReel}} Kg réel</strong>
+                </span>
+                <ng-template #poidsEstime>
+                    <strong>{{ligneCommandeClient.ligneCommande.poidsColis}} Kg estimé</strong>
+                </ng-template>
+                <br>
+                <span *ngIf="!!ligneCommandeClient.ligneCommande.bourguignonSteakHache || !!ligneCommandeClient.ligneCommande.bourguignonVrac">
+                    Bourguignon : 
+                    <span *ngIf="!!ligneCommandeClient.ligneCommande.bourguignonSteakHache && ligneCommandeClient.ligneCommande.bourguignonSteakHache != 0">
+                        {{ligneCommandeClient.ligneCommande.bourguignonSteakHache}} % Steak haché
+                    </span>
+                    <span *ngIf="!!ligneCommandeClient.ligneCommande.bourguignonSteakHache && !!ligneCommandeClient.ligneCommande.bourguignonVrac">
+                         /  
+                    </span>
+                    <span *ngIf="!!ligneCommandeClient.ligneCommande.bourguignonVrac && ligneCommandeClient.ligneCommande.bourguignonVrac != 0">
+                        {{ligneCommandeClient.ligneCommande.bourguignonVrac}} % Vrac
+                    </span>
+                    <br>
+                </span>
+                <span *ngIf="!!ligneCommandeClient.ligneCommande.potAuFeuSteakHache || !!ligneCommandeClient.ligneCommande.potAuFeuVrac">
+                    Pot au feu : 
+                    <span *ngIf="!!ligneCommandeClient.ligneCommande.potAuFeuSteakHache && ligneCommandeClient.ligneCommande.potAuFeuSteakHache != 0">
+                        {{ligneCommandeClient.ligneCommande.potAuFeuSteakHache}} % Steak haché
+                    </span>
+                    <span *ngIf="!!ligneCommandeClient.ligneCommande.potAuFeuSteakHache && !!ligneCommandeClient.ligneCommande.potAuFeuVrac">
+                         /  
+                    </span>
+                    <span *ngIf="!!ligneCommandeClient.ligneCommande.potAuFeuVrac && ligneCommandeClient.ligneCommande.potAuFeuVrac != 0">
+                        {{ligneCommandeClient.ligneCommande.potAuFeuVrac}} % Vrac
+                    </span>
+                    <br>
+                </span>
+                <span *ngIf="ligneCommandeClient.ligneCommande.cote === 0; else fondue">
+                    Côte
+                </span>
+                <ng-template #fondue>
+                    Fondue                        
+                </ng-template>
+              </p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <p><i class="glyphicon glyphicon-euro"></i></p>
+          </div>
+          <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+              <p>
+                    <span *ngIf="!!facture && !!facture.prixEstime"><strong>{{facture.prixEstime}} €</strong></span>
+                  <br>
+                  <span class="label label-info">{{ligneCommandeClient.ligneCommande.titreStatut}}</span>
+              </p>
+          </div>
+      </div>
+  </div>
+  <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <p><i class="glyphicon glyphicon-user"></i></p>
+          </div>
+          <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+              <p><strong>{{ligneCommandeClient.client.prenom}} {{ligneCommandeClient.client.nom}}</strong></p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <p><i class="glyphicon glyphicon-home"></i></p>
+          </div>
+          <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+              <p>{{ligneCommandeClient.client.adresse}}<br>{{ligneCommandeClient.client.codePostal}} {{ligneCommandeClient.client.ville | titlecase}}</p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <p><i class="glyphicon glyphicon-earphone"></i></p>
+          </div>
+          <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+            <p>
+                {{ligneCommandeClient.client.telephone1 | telephonePipe}}
+                <br>
+                <span *ngIf="!!ligneCommandeClient.client.telephone2">{{ligneCommandeClient.client.telephone2 | telephonePipe}}</span>
+            </p>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+              <p><i class="glyphicon glyphicon-envelope"></i></p>
+          </div>
+          <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+              <p><span *ngIf="!!ligneCommandeClient.client.mail">{{ligneCommandeClient.client.mail}}</span></p>
+          </div>
+      </div>
+  </div>
+</div>
+<br>
+<span *ngIf="!!ligneCommandeClient.ligneCommande.messageClient">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <em>Message du client : </em>{{ligneCommandeClient.ligneCommande.messageClient}}
+        </div>
+    </div>
+    <br>
+</span>
+<span *ngIf="!!ligneCommandeClient.ligneCommande.commentaire">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <em>Commentaire : </em><strong>{{ligneCommandeClient.ligneCommande.commentaire}}</strong>
+        </div>
+    </div>
+    <br>
+</span>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <button class="btn btn-info" (click)="onFermer()"><i class="glyphicon glyphicon-log-out"></i> Fermer</button>
+      <button class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i> Modifier</button>
+      <button class="btn btn-success hidden-xs hidden-sm"><i class="glyphicon glyphicon-euro"></i> Générer la facture</button>
+      <!--
+      <button class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Modifier la fiche client</button>
+      -->
+      <button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i> Supprimer le colis</button>
+      
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<!-- Ajouter une commande -->
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h3>Ajouter une commande</h3>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label for="numero" class="col-sm-2 control-label">Animal</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+                  <span class="input-group-addon">FR</span>
+                  <input type="number" name="numero" id="numNational" autocomplete="off">
+              </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="poidsE" class="col-sm-2 control-label">Poids carcasse estimé</label>
+          <div class="col-sm-10">
+            <div class="input-group">
+                  <span class="input-group-addon">Kg</span>
+                  <input type="number" name="poidsE" id="poidsEstime" autocomplete="off">
+              </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dateE" class="col-sm-2 control-label">Date dispo estimée</label>
+          <div class="col-sm-10">
+            <input type="date" name="dateE" id="dateEstimee" autocomplete="off">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i>  Ajouter la commande</button>
+            <button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Annuler</button>
+          </div>
+        </div>
+      </form>
+  </div>
+</div>
