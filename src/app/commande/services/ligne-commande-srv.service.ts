@@ -30,7 +30,7 @@ export class LigneCommandeSrvService {
     }];
    }
 
-   private httpOptions = {
+  private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'

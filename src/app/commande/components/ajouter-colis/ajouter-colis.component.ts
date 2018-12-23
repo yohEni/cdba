@@ -4,6 +4,8 @@ import { ClientSrvService } from '../../../client/services/client-srv.service';
 import { LigneCommande } from 'src/app/shared/modeles/ligne-commande.model';
 import { LigneCommandeSrvService } from '../../services/ligne-commande-srv.service';
 import { PrixSrvService } from '../../services/prix-srv.service';
+import { FactureSrvService } from '../../services/facture-srv.service';
+import { TvaSrvService } from '../../services/tva-srv.service';
 
 @Component({
   selector: 'app-ajouter-colis',
@@ -23,13 +25,27 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   public ligneCommande;
   public isBourguignonTransforme;
   public isPotAuFeuTransforme;
+  private idLigneCommande: string;
 
   private prixEstimeObservable;
   private prixEstimeSubscription;
+  private idPrix: string;
+
+  private tvaObservable;
+  private tvaSubscription;
+  private idTva: string;
+
+  private factureObservable;
+  private factureSubscription;
+  private ligneFacture;
+
+  private truc;
 
   constructor(private clientSrvService: ClientSrvService,
               private ligneCommandeSrvService: LigneCommandeSrvService,
-              private prixSrvService: PrixSrvService) { }
+              private prixSrvService: PrixSrvService,
+              private factureService: FactureSrvService,
+              private tvaService: TvaSrvService) { }
 
   ngOnInit() {
     this.getClients();
@@ -47,6 +63,12 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     }
     if (!!this.prixEstimeSubscription) {
       this.prixEstimeSubscription.unsubscribe();
+    }
+    if (!!this.tvaSubscription) {
+      this.tvaSubscription.unsubscribe();
+    }
+    if (!!this.factureSubscription) {
+      this.factureSubscription.unsubscribe();
     }
   }
 
@@ -113,6 +135,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.prixEstimeObservable = this.prixSrvService.getPrixActif();
     this.prixEstimeSubscription = this.prixEstimeObservable.subscribe(
       (p) => {
+        this.idPrix = p[0].id;
+        console.log(`id prix : ${p[0].id}`);
         console.log(`prix HT : ${p[0].prix_ht}`);
         this.ligneCommande.prixEstime = p[0].prix_ht * this.ligneCommande.poidsColis;
         console.log(`prix estimé : ${this.ligneCommande.prixEstime}`);
@@ -134,10 +158,58 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.ligneCommandeObservable = this.ligneCommandeSrvService.addLigneCommande(this.ligneCommande);
     this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
-        console.log(l);
+        console.log(`réponse insert : ${l.insertedId}`);
         // TODO : tester que l'ajout ait fonctionné
         // TODO : puis créer la ligne facture
+        if (!!l && !!l.insertedId) {
+          this.idLigneCommande = l.insertedId;
+          this.getTva();
+        }
         // TODO : puis fermer le détail et raffraichir la liste des lignesCommande
+      }, (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  /**
+   * Récupère la TVA active
+   */
+  private getTva(): void {
+    this.tvaObservable = this.tvaService.getTvaActive();
+    this.tvaSubscription = this.tvaObservable.subscribe(
+      (t) => {
+        if (!!t && !!t[0].id) {
+          console.log(`idTva : ${t[0].id}`);
+          this.idTva = t[0].id;
+          this.createFacture();
+        }
+      }, (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  /**
+   * Sauvegarde la facture
+   * @param idLigneCommande id de la commande insérée en BDD
+   */
+  private createFacture(): void {
+    this.ligneFacture = [{
+      idLigneCommande: this.idLigneCommande,
+      idPrix: this.idPrix,
+      idTva: this.idTva,
+      prixEstime: this.ligneCommande.prixEstime,
+      idStatut: '1',
+      auteurCreation: '1',
+      auteurModification: '1'
+    }];
+    console.log(this.ligneFacture);
+    this.factureObservable = this.factureService.addFacture(this.ligneFacture);
+    this.factureSubscription = this.factureObservable.subscribe(
+      (f) => {
+        console.log(f);
+        // TODO : récup id facture ?
       }, (error) => {
         console.log(error);
       }
