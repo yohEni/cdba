@@ -6,6 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { CommandeModule } from './commande/commande.module';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -15,6 +16,7 @@ registerLocaleData(localeFr);
   imports: [
     BrowserModule,
     HttpClientModule,
+    NgbModule.forRoot(),
     SharedModule,
     CommandeModule
   ],

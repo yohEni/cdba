@@ -26,15 +26,15 @@
         <div class="form-group">
           <label for="optionTaille" class="col-sm-2 control-label">Taille de colis</label>
           <div class="col-sm-10">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="optionTaille12" id="12Kg" autocomplete="off" [value]= "12" [(ngModel)]="ligneCommande.poidsColis"> 12 Kg
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTailleColis">
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="optionTaille12" id="12Kg" autocomplete="off" [value]= "12" [(ngModel)]="ligneCommande.poidsColis"> 12 Kg
                 </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="optionTaille15" id="15Kg" autocomplete="off" [value]= "15" [(ngModel)]="ligneCommande.poidsColis"> 15 Kg
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="optionTaille15" id="15Kg" autocomplete="off" [value]= "15" [(ngModel)]="ligneCommande.poidsColis"> 15 Kg
                 </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="optionTaille20" id="20Kg" autocomplete="off" [value]= "20" [(ngModel)]="ligneCommande.poidsColis"> 20 Kg
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="optionTaille20" id="20Kg" autocomplete="off" [value]= "20" [(ngModel)]="ligneCommande.poidsColis"> 20 Kg
                 </label>
               </div>
           </div>
@@ -42,12 +42,12 @@
         <div class="form-group">
           <label for="options" class="col-sm-2 control-label">Option</label>
            <div class="col-sm-10">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="optionCote" id="cote" autocomplete="off" [value]= "1" [(ngModel)]="ligneCommande.cote"> Côte
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioCoteFondue">
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="optionCote" id="cote" autocomplete="off" [value]= "1" [(ngModel)]="ligneCommande.cote"> Côte
                 </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="optionFondue" id="fondue" autocomplete="off" [value]= "0" [(ngModel)]="ligneCommande.cote"> Fondue
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="optionFondue" id="fondue" autocomplete="off" [value]= "0" [(ngModel)]="ligneCommande.cote"> Fondue
                 </label>
             </div>
           </div>
@@ -55,12 +55,12 @@
         <div class="form-group">
           <label for="bourguignon" class="col-sm-2 control-label">Bourguignon</label>
           <div class="col-sm-8">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-default active">
-                  <input type="radio" name="bourguignon" id="bEntier" autocomplete="off"> Entier
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBourguignon">
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="bourguignon" id="bEntier" autocomplete="off"> Entier
                 </label>
-                <label class="btn btn-default">
-                  <input type="radio" name="bourguignon" id="bTransforme" autocomplete="off"> Transformé
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="bourguignon" id="bTransforme" autocomplete="off"> Transformé
                 </label>
             </div>  
           </div>
@@ -68,12 +68,12 @@
         <div class="form-group">
           <label for="potAuFeu" class="col-sm-2 control-label">Pot au feu</label>
           <div class="col-sm-2">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-default">
-                  <input type="radio" name="potAuFeuEntier" id="pEntier" autocomplete="off"> Entier
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioPotAuFeu">
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="potAuFeuEntier" id="pEntier" autocomplete="off"> Entier
                 </label>
-                <label class="btn btn-default active">
-                  <input type="radio" name="potAuFeuTransformé" id="pTransforme" autocomplete="off"> Transformé
+                <label ngbButtonLabel class="btn-primary">
+                  <input ngbButton type="radio" name="potAuFeuTransformé" id="pTransforme" autocomplete="off"> Transformé
                 </label>
             </div>  
           </div>

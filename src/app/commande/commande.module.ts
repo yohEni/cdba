@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SyntheseCdeComponent } from './components/synthese-cde/synthese-cde.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
+import { SyntheseCdeComponent } from './components/synthese-cde/synthese-cde.component';
 import { DetailCdeComponent } from './components/detail-cde/detail-cde.component';
 import { DetailColisComponent } from './components/detail-cde/detail-colis/detail-colis.component';
 import { AjouterColisComponent } from './components/ajouter-colis/ajouter-colis.component';
@@ -26,8 +27,9 @@ import { ContainerCdeComponent } from './components/container-cde/container-cde.
   ],
   imports: [
     CommonModule,
-    SharedModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    SharedModule
   ],
   providers: [CommandeSrvService, AnimalSrvService, LigneCommandeSrvService, StatutSrvService],
   exports: [ContainerCdeComponent]
