@@ -49,7 +49,7 @@ export class LigneCommandeSrvService {
    /**
     * Ajoute un colis à la commande
     */
-   public addLigneCommande(commande: JSON): Observable<JSON> {
-     return this.http.post<JSON>(`http://localhost:3000/ligneCommande/`, commande, this.httpOptions);
+   public addLigneCommande(ligneC: JSON): Observable<JSON> {
+     return this.http.post<JSON>(`http://localhost:3000/ligneCommande/`, ligneC, this.httpOptions);
    }
 }

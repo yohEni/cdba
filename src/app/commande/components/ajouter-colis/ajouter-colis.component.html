@@ -9,95 +9,130 @@
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
      <form class="form-horizontal" #ajouterColisForm="ngForm" (submit)="onSubmit()">
         <div class="form-group">
-          <label for="selectClient" class="col-sm-2 control-label">Client</label>
-          <div class="col-sm-8">
-              <select id="selectClient" class="form-control form-control-lg" name="idClient" #client="ngModel" [(ngModel)]="ligneCommande.idClient" required>
-                <option *ngFor="let c of clients" [value]="c.id">{{c.prenom | titlecase}} {{c.nom | uppercase}}</option>
-              </select>
+          <div class="row">
+            <label for="selectClient" class="col-sm-2 control-label">Client</label>
+            <div class="col-sm-6">
+                <select id="selectClient" class="form-control form-control-lg" name="idClient" #client="ngModel" [(ngModel)]="ligneCommande.idClient" required>
+                  <option *ngFor="let c of clients" [value]="c.id">{{c.prenom | titlecase}} {{c.nom | uppercase}}</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <button class="btn btn-primary"><i class="fas fa-plus"></i> Nouveau client</button>
+            </div>
           </div>
-          <div class="col-sm-2">
-              <button class="btn btn-primary"><i class="glyphicon glyphicon-plus"></i> Créer un nouveau client</button>
-          </div>
-          <!--TOFIX-->
-          <div class="col-sm-12 alert alert-danger" *ngIf="client.invalid && (client.dirty || client.touched)">
-            Merci de sélectionner un client
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="optionTaille" class="col-sm-2 control-label">Taille de colis</label>
-          <div class="col-sm-10">
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTailleColis">
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="optionTaille12" id="12Kg" autocomplete="off" [value]= "12" [(ngModel)]="ligneCommande.poidsColis"> 12 Kg
-                </label>
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="optionTaille15" id="15Kg" autocomplete="off" [value]= "15" [(ngModel)]="ligneCommande.poidsColis"> 15 Kg
-                </label>
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="optionTaille20" id="20Kg" autocomplete="off" [value]= "20" [(ngModel)]="ligneCommande.poidsColis"> 20 Kg
-                </label>
-              </div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="options" class="col-sm-2 control-label">Option</label>
-           <div class="col-sm-10">
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioCoteFondue">
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="optionCote" id="cote" autocomplete="off" [value]= "1" [(ngModel)]="ligneCommande.cote"> Côte
-                </label>
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="optionFondue" id="fondue" autocomplete="off" [value]= "0" [(ngModel)]="ligneCommande.cote"> Fondue
-                </label>
+          <div class="row">
+            <div class="col-sm-12 alert alert-danger" *ngIf="client.invalid && (client.dirty || client.touched)">
+              Merci de sélectionner un client
             </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="bourguignon" class="col-sm-2 control-label">Bourguignon</label>
-          <div class="col-sm-8">
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBourguignon">
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="bourguignon" id="bEntier" autocomplete="off"> Entier
-                </label>
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="bourguignon" id="bTransforme" autocomplete="off"> Transformé
-                </label>
-            </div>  
+          <div class="row">
+            <label for="optionTaille" class="col-sm-2 control-label">Taille de colis</label>
+            <div class="col-sm-10">
+              <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTailleColis" [(ngModel)]="ligneCommande.poidsColis" required>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="optionTaille12" id="12Kg" autocomplete="off" [value]= "12"> 12 Kg
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="optionTaille15" id="15Kg" autocomplete="off" [value]= "15"> 15 Kg
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="optionTaille20" id="20Kg" autocomplete="off" [value]= "20"> 20 Kg
+                  </label>
+                </div>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label for="potAuFeu" class="col-sm-2 control-label">Pot au feu</label>
-          <div class="col-sm-2">
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioPotAuFeu">
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="potAuFeuEntier" id="pEntier" autocomplete="off"> Entier
-                </label>
-                <label ngbButtonLabel class="btn-primary">
-                  <input ngbButton type="radio" name="potAuFeuTransformé" id="pTransforme" autocomplete="off"> Transformé
-                </label>
-            </div>  
-          </div>
-          <div class="col-sm-8">
-              <div class="input-group">
-                  <span class="input-group-addon">% Steak haché</span>
-                  <input type="number" name="potAuFeuSteak" id="pShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuSteakHache" minlength="1" maxlength="3">
-              </div>
-              <div class="input-group">
-                  <span class="input-group-addon">% Haché vrac</span>
-                  <input type="number" name="potAuFeuVrac" id="pHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuVrac" minlength="1" maxlength="3">
+          <div class="row">
+              <div class="col-sm-12 alert alert-danger" *ngIf="ligneCommande.poidsColis.invalid">
+                Merci de sélectionner une taille de colis
               </div>
           </div>
         </div>
         <div class="form-group">
-          <label for="comm" class="col-sm-2 control-label">Commentaire</label>
-          <div class="col-sm-8">
-              <textarea name="comm" id="comm" rows="2" autocomplete="off" [(ngModel)]="ligneCommande.commentaire" name="commentaire"></textarea>
+          <div class="row">
+            <label for="options" class="col-sm-2 control-label">Option</label>
+            <div class="col-sm-10">
+              <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioCoteFondue" [(ngModel)]="ligneCommande.cote" required>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="optionCote" id="cote" autocomplete="off" [value]= "1"> Côte
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="optionFondue" id="fondue" autocomplete="off" [value]= "0"> Fondue
+                  </label>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-sm-12 alert alert-danger" *ngIf="ligneCommande.cote.invalid">
+                Merci de sélectionner une option côte ou fondue
+              </div>
           </div>
         </div>
         <div class="form-group">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success" [disabled]="!ajouterColisForm.form.valid"><i class="glyphicon glyphicon-ok"></i>  Ajouter le colis</button>
-            <button class="btn btn-danger" (click)="annulerAjout()"><i class="glyphicon glyphicon-remove"></i> Annuler</button>
+          <div class=row>
+            <label for="bourguignon" class="col-sm-2 control-label">Bourguignon</label>
+            <div class="col-sm-3">
+              <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioBourguignon" [(ngModel)]="isBourguignonTransforme">
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="bourguignon" id="bEntier" autocomplete="off" [value]="false"> Entier
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="bourguignon" id="bTransforme" autocomplete="off" [value]="true"> Transformé
+                  </label>
+              </div>  
+            </div>
+            <div class="col-sm-5" *ngIf="isBourguignonTransforme">
+                <div class="input-group">
+                    <input type="number" name="bourguignonSteak" id="bShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.bourguignonSteakHache" minlength="1" maxlength="3">
+                    <div class="input-group-append"><div class="input-group-text">% Steak haché</div></div>
+                </div>
+                <div class="input-group">
+                    <input type="number" name="bourguignonVrac" id="bHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.bourguignonVrac" minlength="1" maxlength="3">
+                    <div class="input-group-append"><div class="input-group-text">% Haché vrac</div></div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="potAuFeu" class="col-sm-2 control-label">Pot au feu</label>
+            <div class="col-sm-3">
+              <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioPotAuFeu" [(ngModel)]="isPotAuFeuTransforme">
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="potAuFeuEntier" id="pEntier" autocomplete="off" [value]="false"> Entier
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="potAuFeuTransformé" id="pTransforme" autocomplete="off" [value]="true"> Transformé
+                  </label>
+              </div> 
+            </div>
+            <div class="col-sm-5" *ngIf="isPotAuFeuTransforme">
+                <div class="input-group">
+                    <input type="number" name="potAuFeuSteak" id="pShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuSteakHache" minlength="1" maxlength="3">
+                    <div class="input-group-append"><div class="input-group-text">% Steak haché</div></div>
+                </div>
+                <div class="input-group">
+                    <input type="number" name="potAuFeuVrac" id="pHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuVrac" minlength="1" maxlength="3">
+                    <div class="input-group-append"><div class="input-group-text">% Haché vrac</div></div>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <label for="comm" class="col-sm-2 control-label">Commentaire</label>
+            <div class="col-sm-8">
+                <textarea name="comm" id="comm" autocomplete="off" [(ngModel)]="ligneCommande.commentaire" name="commentaire"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-success" [disabled]="!ajouterColisForm.form.valid"><i class="fas fa-check"></i>  Ajouter le colis</button>
+              <button class="btn btn-danger" (click)="annulerAjout()"><i class="fas fa-times"></i> Annuler</button>
+            </div>
           </div>
         </div>
       </form>

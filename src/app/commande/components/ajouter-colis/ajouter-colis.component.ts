@@ -21,6 +21,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private ligneCommandeObservable;
   private ligneCommandeSubscription;
   public ligneCommande;
+  public isBourguignonTransforme;
+  public isPotAuFeuTransforme;
 
   private prixEstimeObservable;
   private prixEstimeSubscription;
@@ -32,6 +34,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getClients();
     this.ligneCommande = new LigneCommande('', this.idCommandeColis, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+    this.isBourguignonTransforme = false;
+    this.isPotAuFeuTransforme = false;
   }
 
   ngOnDestroy() {
@@ -40,6 +44,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     }
     if (!!this.ligneCommandeSubscription) {
       this.ligneCommandeSubscription.unsubscribe();
+    }
+    if (!!this.prixEstimeSubscription) {
+      this.prixEstimeSubscription.unsubscribe();
     }
   }
 
@@ -69,6 +76,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
    * Complète les infos du colis
    */
   private setInfos(): void {
+    this.checkTransformation();
     const date = new Date().toString();
     this.ligneCommande.dateCommande = date;
     this.ligneCommande.dateCreation = date;
@@ -78,6 +86,24 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     // TODO : changer système de statut
     this.ligneCommande.titreStatut = 'En cours';
     this.setPrixEstime();
+  }
+
+  /**
+   * Affecte 0 si les valeurs sont vides
+   */
+  private checkTransformation(): void {
+    if (this.ligneCommande.bourguignonSteakHache.length === 0) {
+      this.ligneCommande.bourguignonSteakHache = 0;
+    }
+    if (this.ligneCommande.bourguignonVrac.length === 0) {
+      this.ligneCommande.bourguignonVrac = 0;
+    }
+    if (this.ligneCommande.potAuFeuSteakHache.length === 0) {
+      this.ligneCommande.potAuFeuSteakHache = 0;
+    }
+    if (this.ligneCommande.potAuFeuVrac.length === 0) {
+      this.ligneCommande.potAuFeuVrac = 0;
+    }
   }
 
   /**
@@ -91,7 +117,6 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
         this.ligneCommande.prixEstime = p[0].prix_ht * this.ligneCommande.poidsColis;
         console.log(`prix estimé : ${this.ligneCommande.prixEstime}`);
         if (!!this.ligneCommande.prixEstime) {
-          // TODO : fix pb CORS quand pt au feu est vide et commentaire aussi
           this.sauvColis();
         } else {
           console.log('Erreur lors du calcul du prix estimé du colis');
@@ -110,6 +135,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
         console.log(l);
+        // TODO : tester que l'ajout ait fonctionné
+        // TODO : puis créer la ligne facture
+        // TODO : puis fermer le détail et raffraichir la liste des lignesCommande
       }, (error) => {
         console.log(error);
       }
