@@ -9,6 +9,7 @@ export class Client {
         public telephone2: string,
         public mail: string,
         public aboNewsletter: string,
+        public motDePasse: string,
         public auteurCreation: string,
         public dateCreation: string,
         public auteurModification: string,

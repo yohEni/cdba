@@ -6,6 +6,8 @@ import { LigneCommandeSrvService } from '../../services/ligne-commande-srv.servi
 import { PrixSrvService } from '../../services/prix-srv.service';
 import { FactureSrvService } from '../../services/facture-srv.service';
 import { TvaSrvService } from '../../services/tva-srv.service';
+import { ViewportScroller } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ajouter-colis',
@@ -14,7 +16,8 @@ import { TvaSrvService } from '../../services/tva-srv.service';
 })
 export class AjouterColisComponent implements OnInit, OnDestroy {
 
-  @Output() fermerDetail: EventEmitter<any> = new EventEmitter<any>();
+  @Output() fermerAjout: EventEmitter<any> = new EventEmitter<any>();
+  @Output() apresAjout: EventEmitter<any> = new EventEmitter<any>();
   @Input() idCommandeColis;
   private clientsObservable;
   private clientsSubscription;
@@ -23,8 +26,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private ligneCommandeObservable;
   private ligneCommandeSubscription;
   public ligneCommande;
-  public isBourguignonTransforme;
-  public isPotAuFeuTransforme;
+  public isBourguignonTransforme: boolean;
+  public isPotAuFeuTransforme: boolean;
   private idLigneCommande: string;
 
   private prixEstimeObservable;
@@ -39,9 +42,12 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private factureSubscription;
   private ligneFacture;
 
-  private truc;
+  public msgOk: string;
+  public msgKo: string;
+  public showAjouterClient: boolean;
 
-  constructor(private clientSrvService: ClientSrvService,
+  constructor(private viewportScroller: ViewportScroller,
+              private clientSrvService: ClientSrvService,
               private ligneCommandeSrvService: LigneCommandeSrvService,
               private prixSrvService: PrixSrvService,
               private factureService: FactureSrvService,
@@ -52,6 +58,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.ligneCommande = new LigneCommande('', this.idCommandeColis, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
     this.isBourguignonTransforme = false;
     this.isPotAuFeuTransforme = false;
+    this.viewportScroller.scrollToAnchor('titreAjouterUnColis');
   }
 
   ngOnDestroy() {
@@ -90,6 +97,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
         this.clients = c;
       }, (error) => {
         console.log(error);
+        this.setMsgKo('Une erreur est survenue lors de la récupération de la liste des clients');
     }
     );
   }
@@ -132,6 +140,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
    * Calcule le prix estime du colis
    */
   private setPrixEstime(): void {
+    const msgErreur = 'Erreur lors du calcul du prix estimé du colis';
     this.prixEstimeObservable = this.prixSrvService.getPrixActif();
     this.prixEstimeSubscription = this.prixEstimeObservable.subscribe(
       (p) => {
@@ -143,10 +152,12 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
         if (!!this.ligneCommande.prixEstime) {
           this.sauvColis();
         } else {
-          console.log('Erreur lors du calcul du prix estimé du colis');
+          console.log(msgErreur);
+          this.setMsgKo(msgErreur);
         }
       }, (error) => {
         console.log(error);
+        this.setMsgKo(`${msgErreur} : ${error}`);
       }
     );
   }
@@ -159,15 +170,13 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
         console.log(`réponse insert : ${l.insertedId}`);
-        // TODO : tester que l'ajout ait fonctionné
-        // TODO : puis créer la ligne facture
         if (!!l && !!l.insertedId) {
           this.idLigneCommande = l.insertedId;
           this.getTva();
         }
-        // TODO : puis fermer le détail et raffraichir la liste des lignesCommande
       }, (error) => {
         console.log(error);
+        this.setMsgKo('Erreur lors de l\'ajout du colis');
       }
     );
   }
@@ -185,7 +194,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
           this.createFacture();
         }
       }, (error) => {
-        console.log(error);
+        console.log(`erreur de getTva : ${error}`);
+        this.setMsgKo(`Erreur dans la récupération de la TVA : ${error}`);
       }
     );
   }
@@ -210,17 +220,55 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       (f) => {
         console.log(f);
         // TODO : récup id facture ?
+        this.setMsgOk('Colis ajouté avec succès');
+        // TODO : fermer le détail et raffraichir la liste des lignesCommande
+        this.apresAjout.emit();
+        // TODO : ou plutôt changer l'intitulé des boutons et proposer un update ?
       }, (error) => {
         console.log(error);
+        this.setMsgKo('Erreur lors de la création de la facture');
       }
     );
+  }
+
+  /**
+   * @param msg Affiche le message OK
+   */
+  private setMsgOk(msg: string) {
+    this.msgKo = null;
+    this.msgOk = msg;
+  }
+
+  /**
+   * @param msg Affiche le message KO
+   */
+  private setMsgKo(msg: string) {
+    this.msgOk = null;
+    this.msgKo = msg;
+  }
+
+  /**
+   * Affiche le formulaire ajout client
+   */
+  public onAjouterClient(): void {
+    // TODO : verifier si technique propre
+    this.showAjouterClient = true;
+  }
+
+  /**
+   * Raffraichit la liste des clients et sélectionne celui qui vient d'être ajouté
+   */
+  public setClientAjoute(idClientAjoute: string): void {
+    this.showAjouterClient = false;
+    this.getClients();
+    this.ligneCommande.idClient = idClientAjoute;
   }
 
   /**
    * Ferme le formulaire d'ajout
    */
   public annulerAjout(): void {
-    this.fermerDetail.emit();
+    this.fermerAjout.emit();
   }
 
 }

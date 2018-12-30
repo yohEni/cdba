@@ -7,59 +7,64 @@
 <hr>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <form class="form-horizontal">
+      <form class="form-horizontal" #ajouterClientForm="ngForm" (submit)="onSubmit()">
         <div class="form-group">
           <label for="nom" class="col-sm-2 control-label">Nom</label>
           <div class="col-sm-10">
-            <input type="text" name="nom" id="nom" autocomplete="off" required>
+            <input type="text" name="nom" id="nom" [(ngModel)]="client.nom" autocomplete="off" required>
           </div>
         </div>
         <div class="form-group">
           <label for="prenom" class="col-sm-2 control-label">Prénom</label>
           <div class="col-sm-10">
-            <input type="text" name="prenom" id="prenom" autocomplete="off">
+            <input type="text" name="prenom" id="prenom" [(ngModel)]="client.prenom" autocomplete="off" required>
           </div>
         </div>
         <div class="form-group">
           <label for="adresse" class="col-sm-2 control-label">Adresse</label>
           <div class="col-sm-10">
-            <input type="text" name="adresse" id="adresse" autocomplete="off">
+            <input type="text" name="adresse" id="adresse" [(ngModel)]="client.adresse" autocomplete="off" required>
           </div>
         </div>
         <div class="form-group">
           <label for="codePostal" class="col-sm-2 control-label">Code Postal</label>
           <div class="col-sm-10">
-            <input type="number" name="codePostal" id="codePostal" autocomplete="off">
+            <input type="number" name="codePostal" id="codePostal" [(ngModel)]="client.codePostal" autocomplete="off" required minlength="5" maxlength="5"> 
           </div>
         </div>
         <div class="form-group">
           <label for="ville" class="col-sm-2 control-label">Ville</label>
           <div class="col-sm-10">
-            <input type="text" name="ville" id="ville" autocomplete="off">
+            <input type="text" name="ville" id="ville" [(ngModel)]="client.ville" autocomplete="off" required>
           </div>
         </div>
         <div class="form-group">
           <label for="telephone1" class="col-sm-2 control-label">Téléphone 1</label>
           <div class="col-sm-10">
-            <input type="text" name="telephone1" id="telephone" autocomplete="off">
+            <input type="text" name="telephone1" id="telephone" [(ngModel)]="client.telephone1" autocomplete="off" required minlength="10">
           </div>
         </div>
         <div class="form-group">
           <label for="telephone2" class="col-sm-2 control-label">Téléphone 2</label>
           <div class="col-sm-10">
-            <input type="text" name="telephone2" id="telephone" autocomplete="off">
+            <input type="text" name="telephone2" id="telephone" [(ngModel)]="client.telephone2" autocomplete="off">
           </div>
         </div>
         <div class="form-group">
           <label for="email" class="col-sm-2 control-label">Mail</label>
           <div class="col-sm-10">
-            <input type="email" name="email" id="email" autocomplete="off">
+            <input type="email" name="email" id="email" [(ngModel)]="client.mail" autocomplete="off">
+          </div>
+        </div>
+        <div class="row" id="msgKo">
+          <div class="col-sm-12 alert alert-danger" *ngIf="msgKo">
+            <span>{{msgKo}}</span>
           </div>
         </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i>  Ajouter le client</button>
-            <button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Annuler</button>
+            <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>  Ajouter le client</button>
+            <button class="btn btn-danger" (click)="cancelAdd(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
           </div>
         </div>
       </form>

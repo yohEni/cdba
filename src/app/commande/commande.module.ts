@@ -14,6 +14,7 @@ import { AnimalSrvService } from './services/animal-srv.service';
 import { LigneCommandeSrvService } from './services/ligne-commande-srv.service';
 import { StatutSrvService } from './services/statut-srv.service';
 import { ContainerCdeComponent } from './components/container-cde/container-cde.component';
+import { ClientModule } from '../client/client.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ContainerCdeComponent } from './components/container-cde/container-cde.
     CommonModule,
     FormsModule,
     NgbModule,
-    SharedModule
+    SharedModule,
+    ClientModule
   ],
   providers: [CommandeSrvService, AnimalSrvService, LigneCommandeSrvService, StatutSrvService],
   exports: [ContainerCdeComponent]

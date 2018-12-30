@@ -1,7 +1,7 @@
 <!-- Détail du colis -->
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h3>Détail du colis <span *ngIf="ligneCommandeClient"><strong>#{{ligneCommandeClient.ligneCommande.id}}</strong></span></h3>
+      <h3 id="titreDetailColis">Détail du colis <span *ngIf="ligneCommandeClient"><strong>#{{ligneCommandeClient.ligneCommande.id}}</strong></span></h3>
   </div>
 </div>
 <hr>
@@ -67,7 +67,7 @@
                     </span>
                     <br>
                 </span>
-                <span *ngIf="ligneCommandeClient.ligneCommande.cote === 0; else fondue">
+                <span *ngIf="ligneCommandeClient.ligneCommande.cote === 1; else fondue">
                     Côte
                 </span>
                 <ng-template #fondue>
@@ -145,6 +145,21 @@
     </div>
     <br>
 </span>
+<ng-template #modaleSuppressionColis let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="titreModaleSuppressionColis">Suppression du colis</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      Confirmez-vous la suppression de ce colis ?
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Annuler')">Annuler</button>
+      <button type="button" class="btn btn-danger" (click)="modal.close('Supprimer')">Supprimer</button>
+    </div>
+  </ng-template>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <button class="btn btn-info" (click)="onFermer()"><i class="fas fa-door-open"></i> Fermer</button>
@@ -153,7 +168,7 @@
       <!--
       <button class="btn btn-default"><i class="glyphicon glyphicon-pencil"></i> Modifier la fiche client</button>
       -->
-      <button class="btn btn-danger"><i class="fas fa-trash"></i> Supprimer le colis</button>
+      <button class="btn btn-danger" (click)="open(modaleSuppressionColis)"><i class="fas fa-trash"></i> Supprimer le colis</button>
       
   </div>
 </div>

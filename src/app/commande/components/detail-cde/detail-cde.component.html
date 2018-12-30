@@ -46,8 +46,8 @@
 <br>
 <br>
 <span *ngIf="ligneDetail">
-    <app-detail-colis [ligneCommandeClient]=ligneDetail [facture]=ligneFacture (fermerDetail)="setNoDetail()"></app-detail-colis>
+    <app-detail-colis [ligneCommandeClient]=ligneDetail [facture]=ligneFacture (fermerDetail)="setNoDetail()" (apresSuppression)="refresh()"></app-detail-colis>
 </span>
 <span *ngIf="voirAjoutColis">
-    <app-ajouter-colis [idCommandeColis]=idCommande (fermerAjout)="setNoAjout()"></app-ajouter-colis>
+    <app-ajouter-colis [idCommandeColis]=idCommande (fermerAjout)="setNoAjout()" (apresAjout)="refresh()"></app-ajouter-colis>
 </span>

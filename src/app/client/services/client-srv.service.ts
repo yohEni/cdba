@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +9,13 @@ export class ClientSrvService {
 
   private client;
   private clients;
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
+  };
 
   constructor(private http: HttpClient) { }
 
@@ -32,6 +39,6 @@ export class ClientSrvService {
    */
   public addClient(client: JSON): Observable<JSON> {
     // TODO : à tester
-    return this.http.post<JSON>('http://localhost:3000/client', client);
+    return this.http.post<JSON>('http://localhost:3000/client', client, this.httpOptions);
   }
 }

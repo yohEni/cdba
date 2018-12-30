@@ -1,7 +1,7 @@
 <!-- Ajouter un colis -->
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h3>Ajouter un colis</h3>
+      <h3 id="titreAjouterUnColis">Ajouter un colis</h3>
   </div>
 </div>
 <hr>
@@ -17,7 +17,7 @@
                 </select>
             </div>
             <div class="col-sm-4">
-                <button class="btn btn-primary"><i class="fas fa-plus"></i> Nouveau client</button>
+                <button class="btn btn-primary rounded-0" (click)="onAjouterClient(); $event.preventDefault()"><i class="fas fa-plus"></i> Nouveau client</button>
             </div>
           </div>
           <div class="row">
@@ -26,6 +26,7 @@
             </div>
           </div>
         </div>
+        <span *ngIf="showAjouterClient"><app-ajouter-client (fermerAjoutClient)="setClientAjoute($event)"></app-ajouter-client></span>
         <div class="form-group">
           <div class="row">
             <label for="optionTaille" class="col-sm-2 control-label">Taille de colis</label>
@@ -127,11 +128,21 @@
             </div>
           </div>
         </div>
+        <div class="row" id="msgKo">
+          <div class="col-sm-12 alert alert-danger" *ngIf="msgKo">
+            <span>{{msgKo}}</span>
+          </div>
+        </div>
+        <div class="row" id="msgOk">
+          <div class="col-sm-12 alert alert-success" *ngIf="msgOk">
+            <span>{{msgOk}}</span>
+          </div>
+        </div>
         <div class="form-group">
           <div class="row">
             <div class="col-sm-offset-2 col-sm-10">
               <button type="submit" class="btn btn-success" [disabled]="!ajouterColisForm.form.valid"><i class="fas fa-check"></i>  Ajouter le colis</button>
-              <button class="btn btn-danger" (click)="annulerAjout()"><i class="fas fa-times"></i> Annuler</button>
+              <button class="btn btn-danger" (click)="annulerAjout(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
             </div>
           </div>
         </div>

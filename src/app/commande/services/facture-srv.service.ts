@@ -24,7 +24,19 @@ export class FactureSrvService {
     return this.http.get<JSON>(`http://localhost:3000/facture/${idLigneCommande}`);
   }
 
+  /**
+   * Ajoute la facture
+   * @param ligneFacture ligneFacture
+   */
   public addFacture(ligneFacture: JSON): Observable<JSON> {
     return this.http.post<JSON>(`http://localhost:3000/facture/`, ligneFacture, this.httpOptions);
+  }
+
+  /**
+   * Suppression de la facture
+   * @param id id de la facture à supprimer
+   */
+  public removeFacture(id: string): Observable<JSON> {
+    return this.http.delete<JSON>(`http://localhost:3000/facture/${id}`, this.httpOptions);
   }
 }

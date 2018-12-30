@@ -92,12 +92,12 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
     this.factureSubscription = this.factureObservable.subscribe(
       (f) => {
         this.ligneFacture = f[0];
+        console.log('ligneFacture :');
         console.log(this.ligneFacture);
       }, (error) => {
         console.log(error);
       }
     );
-    console.log(this.ligneDetail);
   }
 
   /**
@@ -119,8 +119,16 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
    * Masque le formulaire d'ajout de colis
    */
   public setNoAjout(): void {
-    console.log(`boolean voirAjoutColis = ${this.voirAjoutColis}`);
     this.voirAjoutColis = false;
+  }
+
+  /**
+   * Raffraichit le tableau suite à l'ajout d'un colis
+   */
+  public refresh(): void {
+    this.voirAjoutColis = false;
+    this.setNoDetail();
+    this.getLignesCommandes(this.idCommande);
   }
 
   /**
