@@ -19,6 +19,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   @Output() fermerAjout: EventEmitter<any> = new EventEmitter<any>();
   @Output() apresAjout: EventEmitter<any> = new EventEmitter<any>();
   @Input() idCommandeColis;
+  @Input() LigneCommandeInitiale;
   private clientsObservable;
   private clientsSubscription;
   public clients;
@@ -44,6 +45,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
 
   public msgOk: string;
   public msgKo: string;
+
+  public modeModification: boolean;
+
   public showAjouterClient: boolean;
 
   constructor(private viewportScroller: ViewportScroller,
@@ -59,6 +63,14 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.isBourguignonTransforme = false;
     this.isPotAuFeuTransforme = false;
     this.viewportScroller.scrollToAnchor('titreAjouterUnColis');
+    console.log(this.LigneCommandeInitiale);
+    if (!!this.LigneCommandeInitiale) {
+      this.ligneCommande = this.LigneCommandeInitiale;
+      this.modeModification = true;
+    } else {
+      this.modeModification = false;
+    }
+    console.log(this.ligneCommande);
   }
 
   ngOnDestroy() {
@@ -108,13 +120,15 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private setInfos(): void {
     this.checkTransformation();
     const date = new Date().toString();
-    this.ligneCommande.dateCommande = date;
-    this.ligneCommande.dateCreation = date;
+    if (!this.modeModification) {
+      this.ligneCommande.dateCommande = date;
+      this.ligneCommande.dateCreation = date;
+      this.ligneCommande.auteurCreation = 1;
+      this.ligneCommande.titreStatut = 'En cours';
+    }
     this.ligneCommande.dateModification = date;
-    this.ligneCommande.auteurCreation = 1;
     this.ligneCommande.auteurModification = 1;
     // TODO : changer système de statut
-    this.ligneCommande.titreStatut = 'En cours';
     this.setPrixEstime();
   }
 
@@ -166,8 +180,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
    * Sauvegarde le colis
    */
   private sauvColis(): void {
-    this.ligneCommandeObservable = this.ligneCommandeSrvService.addLigneCommande(this.ligneCommande);
-    this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
+    if (!this.modeModification) {
+      this.ligneCommandeObservable = this.ligneCommandeSrvService.addLigneCommande(this.ligneCommande);
+      this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
         console.log(`réponse insert : ${l.insertedId}`);
         if (!!l && !!l.insertedId) {
@@ -178,7 +193,22 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
         console.log(error);
         this.setMsgKo('Erreur lors de l\'ajout du colis');
       }
-    );
+      );
+    } else {
+      this.ligneCommandeObservable = this.ligneCommandeSrvService.editLigneCommande(this.ligneCommande);
+      this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
+      (l) => {
+        console.log(`réponse : ${l}`);
+        if (!!l && !!l.insertedId) {
+          this.idLigneCommande = l.insertedId;
+          this.getTva();
+        }
+      }, (error) => {
+        console.log(error);
+        this.setMsgKo('Erreur lors de la modification du colis');
+      }
+      );
+    }
   }
 
   /**
@@ -191,7 +221,11 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
         if (!!t && !!t[0].id) {
           console.log(`idTva : ${t[0].id}`);
           this.idTva = t[0].id;
-          this.createFacture();
+          if (!this.modeModification) {
+            this.createFacture();
+          } else {
+            this.editFacture();
+          }
         }
       }, (error) => {
         console.log(`erreur de getTva : ${error}`);
@@ -229,6 +263,10 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
         this.setMsgKo('Erreur lors de la création de la facture');
       }
     );
+  }
+
+  private editFacture(): void {
+    // TODO : implémenter. Voir pour récupérer la facture en entrée
   }
 
   /**

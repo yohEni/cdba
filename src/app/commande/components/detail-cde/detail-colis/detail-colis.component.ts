@@ -14,6 +14,7 @@ export class DetailColisComponent implements OnInit, OnDestroy {
   @Input() ligneCommandeClient: any;
   @Input() facture: any;
   @Output() fermerDetail: EventEmitter<any> = new EventEmitter<any>();
+  @Output() modifierEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() apresSuppression: EventEmitter<any> = new EventEmitter<any>();
 
   closeResult: string;
@@ -123,6 +124,13 @@ export class DetailColisComponent implements OnInit, OnDestroy {
       console.log(error);
     }
     );
+  }
+
+  /**
+   * Emet un event avec la ligne à modifier
+   */
+  public modifierColis() {
+    this.modifierEvent.emit(this.ligneCommandeClient.ligneCommande);
   }
 
   /**

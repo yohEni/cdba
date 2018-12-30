@@ -54,6 +54,14 @@ export class LigneCommandeSrvService {
    }
 
    /**
+    * Modifie le colis (la ligneCommande)
+    * @param ligneC ligneCommande
+    */
+   public editLigneCommande(ligneC: JSON): Observable<JSON> {
+    return this.http.put<JSON>(`http://localhost:3000/ligneCommande/`, ligneC, this.httpOptions);
+  }
+
+   /**
     * Supprime le colis (la ligne commande)
     * @param id id ligneCommande
     */

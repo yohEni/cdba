@@ -20,7 +20,7 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   private factureObservable;
   private factureSubscription;
   public ligneFacture;
-
+  public ligneAModifier;
   public voirAjoutColis: boolean;
 
   private clientObservable;
@@ -112,6 +112,16 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
    * Affiche le formulaire d'ajout de colis
    */
   public ajouterColis(): void {
+    this.voirAjoutColis = true;
+  }
+
+  /**
+   * Masque le détail et affiche le formulaire de modif
+   * @param ligne ligneCommande à modifier
+   */
+  public modifierColis(ligne: any): void {
+    this.ligneAModifier = ligne;
+    this.setNoDetail();
     this.voirAjoutColis = true;
   }
 
