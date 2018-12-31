@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Animal } from '../../shared/modeles/animal.model';
 
@@ -10,6 +10,13 @@ import { Animal } from '../../shared/modeles/animal.model';
 export class AnimalSrvService {
 
   private animal;
+
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
+  };
 
   constructor(private http: HttpClient) {
 
@@ -28,5 +35,13 @@ export class AnimalSrvService {
    */
   public getAnimal(id: string): Observable<Animal[]> {
     return this.http.get<Animal[]>(`http://localhost:3000/animal/${id}`);
+  }
+
+  /**
+   * Met à jour l'animal
+   * @param animal animal en JSON
+   */
+  public updateAnimal(animal: JSON): Observable<Animal[]> {
+    return this.http.put<Animal[]>(`http://localhost:3000/animal/`, animal, this.httpOptions);
   }
 }

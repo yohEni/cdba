@@ -41,6 +41,7 @@ export class ContainerCdeComponent implements OnInit {
    * Affiche l'ajout d'une commande
    */
   private showAjouterCommande(): void {
+    // TODO : FIX clic sur nouvelle commande quand modif en cours (et vice versa)
     this.showAjoutModifCde = true;
     this.idCommande = undefined;
     this.commande = undefined;
@@ -51,6 +52,7 @@ export class ContainerCdeComponent implements OnInit {
    */
   private annulerAjoutModif(): void {
     this.commande = undefined;
+    this.idCommande = undefined;
     this.showAjoutModifCde = false;
   }
 
