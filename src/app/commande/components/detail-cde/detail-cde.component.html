@@ -49,5 +49,5 @@
     <app-detail-colis [ligneCommandeClient]=ligneDetail [facture]=ligneFacture (fermerDetail)="setNoDetail()" (modifierEvent)="modifierColis($event)" (apresSuppression)="refresh()"></app-detail-colis>
 </span>
 <span *ngIf="voirAjoutColis">
-    <app-ajouter-colis [idCommandeColis]=idCommande [LigneCommandeInitiale]=ligneAModifier (fermerAjout)="setNoAjout()" (apresAjout)="refresh()"></app-ajouter-colis>
+    <app-ajouter-colis [idCommandeColis]=idCommande [ligneCommandeInitiale]=ligneAModifier (fermerAjout)="setNoAjout()" (apresAjout)="refresh()"></app-ajouter-colis>
 </span>

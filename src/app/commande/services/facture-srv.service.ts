@@ -33,6 +33,14 @@ export class FactureSrvService {
   }
 
   /**
+   * Modifie la facture existante
+   * @param ligneFacture ligneFacture
+   */
+  public editFacture(ligneFacture: JSON): Observable<JSON> {
+    return this.http.put<JSON>(`http://localhost:3000/facture/`, ligneFacture, this.httpOptions);
+  }
+
+  /**
    * Suppression de la facture
    * @param id id de la facture à supprimer
    */

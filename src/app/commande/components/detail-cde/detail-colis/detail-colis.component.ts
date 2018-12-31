@@ -130,7 +130,7 @@ export class DetailColisComponent implements OnInit, OnDestroy {
    * Emet un event avec la ligne à modifier
    */
   public modifierColis() {
-    this.modifierEvent.emit(this.ligneCommandeClient.ligneCommande);
+    this.modifierEvent.emit([this.ligneCommandeClient.ligneCommande, this.facture]);
   }
 
   /**

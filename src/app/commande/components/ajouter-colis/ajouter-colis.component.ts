@@ -19,7 +19,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   @Output() fermerAjout: EventEmitter<any> = new EventEmitter<any>();
   @Output() apresAjout: EventEmitter<any> = new EventEmitter<any>();
   @Input() idCommandeColis;
-  @Input() LigneCommandeInitiale;
+  @Input() ligneCommandeInitiale;
   private clientsObservable;
   private clientsSubscription;
   public clients;
@@ -63,14 +63,13 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.isBourguignonTransforme = false;
     this.isPotAuFeuTransforme = false;
     this.viewportScroller.scrollToAnchor('titreAjouterUnColis');
-    console.log(this.LigneCommandeInitiale);
-    if (!!this.LigneCommandeInitiale) {
-      this.ligneCommande = this.LigneCommandeInitiale;
+    if (!!this.ligneCommandeInitiale) {
+      this.ligneCommande = this.ligneCommandeInitiale[0];
+      this.ligneFacture = this.ligneCommandeInitiale[1];
       this.modeModification = true;
     } else {
       this.modeModification = false;
     }
-    console.log(this.ligneCommande);
   }
 
   ngOnDestroy() {
@@ -199,8 +198,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
         console.log(`réponse : ${l}`);
-        if (!!l && !!l.insertedId) {
-          this.idLigneCommande = l.insertedId;
+        if (!!l) {
           this.getTva();
         }
       }, (error) => {
@@ -265,8 +263,27 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Modifie la facture
+   */
   private editFacture(): void {
-    // TODO : implémenter. Voir pour récupérer la facture en entrée
+    this.ligneFacture.prixEstime = this.ligneCommande.prixEstime;
+    this.ligneFacture.idStatut = '1';
+    this.ligneFacture.auteurModification = '1';
+    this.factureObservable = this.factureService.editFacture(this.ligneFacture);
+    this.factureSubscription = this.factureObservable.subscribe(
+      (f) => {
+        console.log(f);
+        // TODO : récup id facture ?
+        this.setMsgOk('Colis modifié avec succès');
+        // TODO : fermer le détail et raffraichir la liste des lignesCommande
+        this.apresAjout.emit();
+        // TODO : ou plutôt changer l'intitulé des boutons et proposer un update ?
+      }, (error) => {
+        console.log(error);
+        this.setMsgKo('Erreur lors de la modification de la facture');
+      }
+    );
   }
 
   /**
