@@ -26,6 +26,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
 
   @Output() voirDetailEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() modifierCdeEvent: EventEmitter<JSON[]> = new EventEmitter<JSON[]>();
+  @Output() ajouterCdeEvent: EventEmitter<any> = new EventEmitter<any>();
 
   // Bouchon
   progressionCde = '16%';
@@ -86,15 +87,22 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
    * Voir le détail de la commande
    * @param evt event
    */
-  private onVoirDetail(evt) {
+  private onVoirDetail(evt): void {
     this.voirDetailEvent.emit(this.lastCommande.id);
   }
 
   /**
    * Envoi un event avec la commande à modifier et l'animal
    */
-  private onModifierCde() {
+  private onModifierCde(): void {
     this.modifierCdeEvent.emit([this.lastCommande, this.animal]);
+  }
+
+  /**
+   * Envoi un event pour ajouter une commande
+   */
+  private onAjouterCde(): void {
+    this.ajouterCdeEvent.emit(event);
   }
 
 }

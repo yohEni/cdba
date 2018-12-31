@@ -9,11 +9,12 @@ export class ContainerCdeComponent implements OnInit {
 
   public idCommande: string;
   public commande: JSON[];
+  public showAjoutModifCde: boolean;
 
   constructor() { }
 
   ngOnInit() {
-
+    this.showAjoutModifCde = false;
   }
 
   /**
@@ -22,6 +23,7 @@ export class ContainerCdeComponent implements OnInit {
    */
   private setIdCommande(id: string): void {
     this.commande = undefined;
+    this.showAjoutModifCde = false;
     this.idCommande = id;
   }
 
@@ -31,7 +33,17 @@ export class ContainerCdeComponent implements OnInit {
    */
   private setCommande(cde: JSON[]): void {
     this.idCommande = undefined;
+    this.showAjoutModifCde = true;
     this.commande = cde;
+  }
+
+  /**
+   * Affiche l'ajout d'une commande
+   */
+  private showAjouterCommande(): void {
+    this.showAjoutModifCde = true;
+    this.idCommande = undefined;
+    this.commande = undefined;
   }
 
   /**
@@ -39,6 +51,7 @@ export class ContainerCdeComponent implements OnInit {
    */
   private annulerAjoutModif(): void {
     this.commande = undefined;
+    this.showAjoutModifCde = false;
   }
 
 }
