@@ -75,7 +75,6 @@ export class DetailColisComponent implements OnInit, OnDestroy {
    * @param reason raison de la fermeture
    */
   private getDismissReason(reason: any): string {
-    console.log(reason);
     if (reason === ModalDismissReasons.ESC) {
       return 'en pressant ESC';
     } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {

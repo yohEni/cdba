@@ -79,7 +79,6 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
-    console.log(this.lignesClientsCommandes);
   }
 
   /**
@@ -87,13 +86,12 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
    * @param ligneClientCommande num ligne détail
    */
   public onAfficherDetail(numLigne: string): void {
+    this.voirAjoutColis = false;
     this.ligneDetail = this.lignesClientsCommandes[numLigne];
     this.factureObservable = this.factureSrvService.getFacture(this.ligneDetail.ligneCommande.id);
     this.factureSubscription = this.factureObservable.subscribe(
       (f) => {
         this.ligneFacture = f[0];
-        console.log('ligneFacture :');
-        console.log(this.ligneFacture);
       }, (error) => {
         console.log(error);
       }
