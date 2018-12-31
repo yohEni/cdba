@@ -138,6 +138,7 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   public refresh(): void {
     this.voirAjoutColis = false;
     this.setNoDetail();
+    this.lignesClientsCommandes.length = 0;
     this.getLignesCommandes(this.idCommande);
   }
 

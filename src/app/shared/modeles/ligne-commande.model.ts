@@ -10,6 +10,7 @@ export class LigneCommande {
         public bourguignonVrac: string,
         public potAuFeuSteakHache: string,
         public potAuFeuVrac: string,
+        public idStatut: string,
         public titreStatut: string,
         public messageClient: string,
         public commentaire: string,

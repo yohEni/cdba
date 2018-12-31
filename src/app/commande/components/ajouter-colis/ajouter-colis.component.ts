@@ -8,6 +8,7 @@ import { FactureSrvService } from '../../services/facture-srv.service';
 import { TvaSrvService } from '../../services/tva-srv.service';
 import { ViewportScroller } from '@angular/common';
 import { Observable } from 'rxjs';
+import { StatutSrvService } from '../../services/statut-srv.service';
 
 @Component({
   selector: 'app-ajouter-colis',
@@ -23,6 +24,10 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private clientsObservable;
   private clientsSubscription;
   public clients;
+
+  private statutsObservable;
+  private statutsSubscription;
+  public statuts;
 
   private ligneCommandeObservable;
   private ligneCommandeSubscription;
@@ -52,6 +57,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
 
   constructor(private viewportScroller: ViewportScroller,
               private clientSrvService: ClientSrvService,
+              private statutSrvService: StatutSrvService,
               private ligneCommandeSrvService: LigneCommandeSrvService,
               private prixSrvService: PrixSrvService,
               private factureService: FactureSrvService,
@@ -59,7 +65,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getClients();
-    this.ligneCommande = new LigneCommande('', this.idCommandeColis, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+    this.getStatuts();
+    this.ligneCommande = new LigneCommande('', this.idCommandeColis, '', '', '', '', '', '', '', '', '', '1', '', '', '', '', '', '', '');
     this.isBourguignonTransforme = false;
     this.isPotAuFeuTransforme = false;
     this.viewportScroller.scrollToAnchor('titreAjouterUnColis');
@@ -75,6 +82,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (!!this.clientsSubscription) {
       this.clientsSubscription.unsubscribe();
+    }
+    if (!!this.statutsSubscription) {
+      this.statutsSubscription.unsubscribe();
     }
     if (!!this.ligneCommandeSubscription) {
       this.ligneCommandeSubscription.unsubscribe();
@@ -114,6 +124,21 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Récupère la liste des statuts
+   */
+  private getStatuts(): void {
+    this.statutsObservable = this.statutSrvService.getStatuts();
+    this.statutsSubscription = this.statutsObservable.subscribe(
+      (s) => {
+        this.statuts = s;
+      }, (error) => {
+        console.log(error);
+        this.setMsgKo('Une erreur est survenue lors de la récupération de la liste des statuts');
+      }
+    );
+  }
+
+  /**
    * Complète les infos du colis
    */
   private setInfos(): void {
@@ -123,7 +148,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.ligneCommande.dateCommande = date;
       this.ligneCommande.dateCreation = date;
       this.ligneCommande.auteurCreation = 1;
-      this.ligneCommande.titreStatut = 'En cours';
+      // this.ligneCommande.titreStatut = 'En cours';
     }
     this.ligneCommande.dateModification = date;
     this.ligneCommande.auteurModification = 1;

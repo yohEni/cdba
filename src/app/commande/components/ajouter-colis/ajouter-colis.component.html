@@ -122,6 +122,21 @@
         </div>
         <div class="form-group">
           <div class="row">
+            <label for="selectStatut" class="col-sm-2 control-label">Statut</label>
+            <div class="col-sm-3">
+                <select id="selectStatut" class="form-control form-control-lg" name="idStatut" #statut="ngModel" [(ngModel)]="ligneCommande.idStatut" required>
+                  <option *ngFor="let s of statuts" [value]="s.id">{{s.titreStatut | titlecase}}</option>
+                </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 alert alert-danger" *ngIf="statut.invalid && (statut.dirty || statut.touched)">
+              Merci de sélectionner un statut
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="row">
             <label for="comm" class="col-sm-2 control-label">Commentaire</label>
             <div class="col-sm-8">
                 <textarea name="comm" id="comm" autocomplete="off" [(ngModel)]="ligneCommande.commentaire" name="commentaire"></textarea>
