@@ -1,2 +1,3 @@
-<app-synthese-cde (voirDetailEvent)="setIdCommande($event)"></app-synthese-cde>
-<span *ngIf="idCommande"><app-detail-cde idCommande={{idCommande}}></app-detail-cde></span>
+<app-synthese-cde (voirDetailEvent)="setIdCommande($event)" (modifierCdeEvent)="setCommande($event)"></app-synthese-cde>
+<span *ngIf="idCommande"><app-detail-cde [idCommande]=idCommande></app-detail-cde></span>
+<span *ngIf="commande"><app-ajouter-cde [commandeAModifier]=commande (annulerEvent)="annulerAjoutModif()"></app-ajouter-cde></span>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 export interface Clients {
   id: string;
@@ -23,6 +23,13 @@ export class CommandeSrvService {
   private commande;
   private clients;
 
+  private httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    })
+  };
+
   constructor(private http: HttpClient) {
 
     // Bouchon commande
@@ -42,5 +49,12 @@ export class CommandeSrvService {
   public getLastCommande(): Observable<JSON> {
     const cde = this.http.get<JSON>('http://localhost:3000/commande/2');
     return cde;
+  }
+
+  /**
+   * Met à jour la commande
+   */
+  public updateCommande(commande): Observable<JSON> {
+    return this.http.put<JSON>('http://localhost:3000/commande/', commande, this.httpOptions);
   }
 }

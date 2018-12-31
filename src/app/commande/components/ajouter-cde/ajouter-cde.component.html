@@ -1,41 +1,40 @@
-<!-- Ajouter une commande -->
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h3>Ajouter une commande</h3>
+      <h3 id="titreAjouterUneCommande">Ajouter une commande</h3>
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <form class="form-horizontal">
-        <div class="form-group">
+        <div class="form-group row">
           <label for="numero" class="col-sm-2 control-label">Animal</label>
           <div class="col-sm-10">
             <div class="input-group">
-                  <span class="input-group-addon">FR</span>
-                  <input type="number" name="numero" id="numNational" autocomplete="off">
+                  <span class="input-group-append"><div class="input-group-text">FR</div></span>
+                  <input type="number" name="numero" id="numNational" autocomplete="off" [(ngModel)]="animal.numeroNational" minlength="10" maxlength="10">
               </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label for="poidsE" class="col-sm-2 control-label">Poids carcasse estimé</label>
-          <div class="col-sm-10">
+          <div class="col-sm-6">
             <div class="input-group">
-                  <span class="input-group-addon">Kg</span>
-                  <input type="number" name="poidsE" id="poidsEstime" autocomplete="off">
+                  <input type="number" name="poidsE" id="poidsEstime" autocomplete="off" [(ngModel)]="animal.poidsEstime" minlength="3" maxlength="3">
+                  <span class="input-group-append"><div class="input-group-text">Kg</div></span>
               </div>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <label for="dateE" class="col-sm-2 control-label">Date dispo estimée</label>
           <div class="col-sm-10">
-            <input type="date" name="dateE" id="dateEstimee" autocomplete="off">
+            <input type="date" name="dateE" id="dateEstimee" autocomplete="off" [(ngModel)]="commande.dateLivraisonEstimee">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-ok"></i>  Ajouter la commande</button>
-            <button class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Annuler</button>
+            <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>  Ajouter la commande</button>
+            <button class="btn btn-danger" (click)="onAnnuler(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
           </div>
         </div>
       </form>
