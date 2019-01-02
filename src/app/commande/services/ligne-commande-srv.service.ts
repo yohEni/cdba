@@ -47,6 +47,13 @@ export class LigneCommandeSrvService {
    }
 
    /**
+    * Retourne les stats de la commande passée en paramètre
+    */
+   public getStatLignesCommande(idCommande: string): Observable<JSON> {
+    return this.http.get<JSON>(`http://localhost:3000/ligneCommande/commande/stat/${idCommande}`);
+  }
+
+   /**
     * Ajoute un colis à la commande
     */
    public addLigneCommande(ligneC: JSON): Observable<JSON> {

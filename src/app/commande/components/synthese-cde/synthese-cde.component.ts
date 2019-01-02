@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AnimalSrvService } from '../../services/animal-srv.service';
 
 import { Animal } from '../../../shared/modeles/animal.model';
+import { LigneCommandeSrvService } from '../../services/ligne-commande-srv.service';
 
 
 @Component({
@@ -20,21 +21,25 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
   public animal;
   private animalObservable;
   private animalSubscription;
-
   public numRadical: string;
   public numTravail: string;
+
+  public stat;
+  private statObservable;
+  private statSubscription;
 
   @Output() voirDetailEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() modifierCdeEvent: EventEmitter<JSON[]> = new EventEmitter<JSON[]>();
   @Output() ajouterCdeEvent: EventEmitter<any> = new EventEmitter<any>();
 
   // Bouchon
-  progressionCde = '16%';
-  kgRestant = 253;
-  colisMinRestant = 12;
-  colisMaxRestant = 21;
+  progressionCde = 0;
+  colisMinRestant = 0;
+  colisMaxRestant = 0;
 
-  constructor(private commandeSrvService: CommandeSrvService, private animalSrvService: AnimalSrvService) { }
+  constructor(private commandeSrvService: CommandeSrvService,
+              private animalSrvService: AnimalSrvService,
+              private ligneCommandeSrvService: LigneCommandeSrvService) { }
 
   ngOnInit() {
     this.getLastCommande();
@@ -47,6 +52,9 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
     if (!!this.animalSubscription) {
       this.animalSubscription.unsubscribe();
     }
+    if (!!this.statSubscription) {
+      this.statSubscription.unsubscribe();
+    }
   }
 
   /**
@@ -58,6 +66,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
       (c) => {
         this.lastCommande = c[0];
         this.getAnimal(this.lastCommande.idAnimal);
+        this.getStat(this.lastCommande.id);
       }, (error) => {
         console.log(error);
       }
@@ -77,6 +86,25 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
           this.numRadical = this.animal.numeroNational.substring(0, 6);
           this.numTravail = this.animal.numeroNational.substring(6, 10);
         }
+      }, (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  /**
+   * Récupère les stats de la commande
+   * @param id id de la commande
+   */
+  private getStat(id: string): void {
+    this.statObservable = this.ligneCommandeSrvService.getStatLignesCommande(id);
+    this.statSubscription = this.statObservable.subscribe(
+      (s) => {
+        this.stat = s[0];
+        console.log(this.stat);
+        this.colisMaxRestant = Math.floor(this.stat.kgRestant / 12);
+        this.colisMinRestant = Math.floor(this.stat.kgRestant / 20);
+        this.progressionCde = Math.round(this.stat.avancement);
       }, (error) => {
         console.log(error);
       }
