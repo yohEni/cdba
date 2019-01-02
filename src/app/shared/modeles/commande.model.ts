@@ -4,6 +4,7 @@ export class Commande {
         public dateLivraisonEstimee: string,
         public dateLivraisonReelle: string,
         public titreStatut: string,
+        public idStatut: string,
         public auteurCreation: string,
         public dateCreation: string,
         public auteurModification: string,

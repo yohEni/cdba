@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h3 id="titreAjouterUneCommande">Ajouter une commande</h3>
+      <h3 id="titreAjouterUneCommande" [innerHTML]="txtTitre"></h3>
   </div>
 </div>
 <hr>
@@ -12,7 +12,7 @@
           <div class="col-sm-10">
             <div class="input-group">
                   <span class="input-group-append"><div class="input-group-text">FR</div></span>
-                  <input type="number" name="numero" id="numNational" autocomplete="off" [(ngModel)]="animal.numeroNational" minlength="10" maxlength="10">
+                  <input type="number" name="numero" id="numNational" autocomplete="off" [(ngModel)]="animal.numeroNational" minlength="10" maxlength="10" required>
               </div>
           </div>
         </div>
@@ -39,7 +39,7 @@
         </div>
         <div class="form-group row">
           <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success" [disabled]="!ajouterCommandeForm.form.valid"><i class="fas fa-check"></i>  Ajouter la commande</button>
+            <button type="submit" class="btn btn-success" [disabled]="!ajouterCommandeForm.form.valid" ><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
             <button class="btn btn-danger" (click)="onAnnuler(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
           </div>
         </div>

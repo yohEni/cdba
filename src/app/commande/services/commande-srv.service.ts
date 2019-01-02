@@ -45,6 +45,7 @@ export class CommandeSrvService {
 
   /**
    * Retourne la dernière commande crée
+   * TODO : Implémenter
    */
   public getLastCommande(): Observable<JSON> {
     const cde = this.http.get<JSON>('http://localhost:3000/commande/2');
@@ -54,7 +55,15 @@ export class CommandeSrvService {
   /**
    * Met à jour la commande
    */
-  public updateCommande(commande): Observable<JSON> {
+  public updateCommande(commande: JSON): Observable<JSON> {
     return this.http.put<JSON>('http://localhost:3000/commande/', commande, this.httpOptions);
+  }
+
+  /**
+   * Ajoute la commande
+   * @param commande commande en JSON
+   */
+  public addCommande(commande: JSON): Observable<JSON> {
+    return this.http.post<JSON>('http://localhost:3000/commande/', commande, this.httpOptions);
   }
 }

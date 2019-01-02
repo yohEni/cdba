@@ -48,6 +48,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private factureSubscription;
   private ligneFacture;
 
+  public txtTitre: String;
+  public txtBtnAjouter: String;
   public msgOk: string;
   public msgKo: string;
 
@@ -74,8 +76,12 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.ligneCommande = this.ligneCommandeInitiale[0];
       this.ligneFacture = this.ligneCommandeInitiale[1];
       this.modeModification = true;
+      this.txtTitre = ' Modifier le colis';
+      this.txtBtnAjouter = ' Modifier le colis';
     } else {
       this.modeModification = false;
+      this.txtTitre = ' Ajouter un colis';
+      this.txtBtnAjouter = ' Ajouter le colis';
     }
   }
 
@@ -148,11 +154,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.ligneCommande.dateCommande = date;
       this.ligneCommande.dateCreation = date;
       this.ligneCommande.auteurCreation = 1;
-      // this.ligneCommande.titreStatut = 'En cours';
     }
     this.ligneCommande.dateModification = date;
     this.ligneCommande.auteurModification = 1;
-    // TODO : changer système de statut
     this.setPrixEstime();
   }
 

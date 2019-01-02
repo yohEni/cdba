@@ -44,4 +44,12 @@ export class AnimalSrvService {
   public updateAnimal(animal: JSON): Observable<Animal[]> {
     return this.http.put<Animal[]>(`http://localhost:3000/animal/`, animal, this.httpOptions);
   }
+
+  /**
+   * Ajoute l'animal
+   * @param animal animal en JSON
+   */
+  public addAnimal(animal: JSON): Observable<Animal[]> {
+    return this.http.post<Animal[]>(`http://localhost:3000/animal/`, animal, this.httpOptions);
+  }
 }
