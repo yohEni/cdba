@@ -48,8 +48,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private factureSubscription;
   private ligneFacture;
 
-  public txtTitre: String;
-  public txtBtnAjouter: String;
+  public txtTitre: string;
+  public txtBtnAjouter: string;
   public msgOk: string;
   public msgKo: string;
 
@@ -72,17 +72,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.isBourguignonTransforme = false;
     this.isPotAuFeuTransforme = false;
     this.viewportScroller.scrollToAnchor('titreAjouterUnColis');
-    if (!!this.ligneCommandeInitiale) {
-      this.ligneCommande = this.ligneCommandeInitiale[0];
-      this.ligneFacture = this.ligneCommandeInitiale[1];
-      this.modeModification = true;
-      this.txtTitre = ' Modifier le colis';
-      this.txtBtnAjouter = ' Modifier le colis';
-    } else {
-      this.modeModification = false;
-      this.txtTitre = ' Ajouter un colis';
-      this.txtBtnAjouter = ' Ajouter le colis';
-    }
+    this.checkIfModif();
   }
 
   ngOnDestroy() {
@@ -103,6 +93,29 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     }
     if (!!this.factureSubscription) {
       this.factureSubscription.unsubscribe();
+    }
+  }
+
+  /**
+   * Charge les variables si on est en modification de colis
+   */
+  private checkIfModif(): void {
+    if (!!this.ligneCommandeInitiale) {
+      this.ligneCommande = this.ligneCommandeInitiale[0];
+      this.ligneFacture = this.ligneCommandeInitiale[1];
+      this.modeModification = true;
+      if (!!this.ligneCommande.bourguignonVrac || !!this.ligneCommande.bourguignonSteakHache) {
+        this.isBourguignonTransforme = true;
+      }
+      if (!!this.ligneCommande.potAuFeuVrac || !!this.ligneCommande.potAuFeuSteakHache) {
+        this.isPotAuFeuTransforme = true;
+      }
+      this.txtTitre = ' Modifier le colis';
+      this.txtBtnAjouter = ' Modifier le colis';
+    } else {
+      this.modeModification = false;
+      this.txtTitre = ' Ajouter un colis';
+      this.txtBtnAjouter = ' Ajouter le colis';
     }
   }
 

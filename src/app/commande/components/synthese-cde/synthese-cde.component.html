@@ -40,7 +40,12 @@
                 <p><i class="fas fa-calendar-alt"></i></p>
             </div>
             <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
-                <p><span *ngIf="lastCommande"><strong> {{lastCommande.dateLivraisonEstimee | date: 'd MMMM'}}</strong></span></p>
+                <p>
+                    <span *ngIf="lastCommande">
+                        <strong><span *ngIf="lastCommande.dateLivraisonReelle;else date_estimee"> {{lastCommande.dateLivraisonReelle | date: 'd MMMM'}}</span></strong>
+                        <ng-template #date_estimee>{{lastCommande.dateLivraisonEstimee | date: 'd MMMM'}}</ng-template>
+                    </span>
+                </p>
             </div>
         </div>
     </div>

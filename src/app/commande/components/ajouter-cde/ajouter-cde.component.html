@@ -17,18 +17,34 @@
           </div>
         </div>
         <div class="form-group row">
-          <label for="poidsE" class="col-sm-2 control-label">Poids carcasse estimé</label>
-          <div class="col-sm-4">
+          <label for="poids" class="col-sm-2 control-label">Poids carcasse</label>
+          <div class="col-sm-10">
             <div class="input-group">
-                  <input type="number" name="poidsE" id="poidsEstime" autocomplete="off" [(ngModel)]="animal.poidsEstime" minlength="3" maxlength="3">
-                  <span class="input-group-append"><div class="input-group-text">Kg</div></span>
-              </div>
+                <input type="number" name="poids" id="poids" autocomplete="off" [(ngModel)]="poids" minlength="3" maxlength="3">
+                <span class="input-group-append"><div class="input-group-text">Kg</div></span>
+                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTypePoids" [(ngModel)]="typePoids" required>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="typePoidsE" id="poidsEstime" autocomplete="off" value= "E"> Estimé
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="typePoidsR" id="poidsReel" autocomplete="off" value= "R"> Réel
+                  </label>
+                </div>
+            </div>
           </div>
         </div>
         <div class="form-group row">
-          <label for="dateE" class="col-sm-2 control-label">Date dispo estimée</label>
+          <label for="dateER" class="col-sm-2 control-label">Date dispo</label>
           <div class="col-sm-10">
-            <input type="date" name="dateE" id="dateEstimee" autocomplete="off" [ngModel]="commande.dateLivraisonEstimee | date:'yyyy-MM-dd'" (ngModelChange)="commande.dateLivraisonEstimee = $event">
+            <input type="date" name="dateER" id="dateEstimeeReelle" autocomplete="off" [ngModel]="dateLivraison | date:'yyyy-MM-dd'" (ngModelChange)="dateLivraison = $event">
+            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTypeDate" [(ngModel)]="typeDate" required>
+              <label ngbButtonLabel class="btn-primary">
+                <input ngbButton type="radio" name="typeDateE" id="dateEstimee" autocomplete="off" value= "E"> Estimée
+              </label>
+              <label ngbButtonLabel class="btn-primary">
+                <input ngbButton type="radio" name="typeDateR" id="dateReelle" autocomplete="off" value= "R"> Réelle
+              </label>
+            </div>
           </div>
         </div>
         <div class="row" *ngIf="msgOk">

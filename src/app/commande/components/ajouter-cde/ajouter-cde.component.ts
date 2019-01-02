@@ -23,8 +23,14 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
   private commandeObservable;
   private commandeSubscription;
 
-  public txtTitre: String;
-  public txtBtnAjouter: String;
+  public txtTitre: string;
+  public txtBtnAjouter: string;
+
+  public typeDate: string;
+  public dateLivraison: string;
+
+  public typePoids: string;
+  public poids: string;
 
   public msgOk;
   public msgKo;
@@ -36,16 +42,31 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
       this.commande = this.commandeAModifier[0];
       this.animal = this.commandeAModifier[1];
       this.modeModification = true;
+      if (!!this.commande.dateLivraisonReelle) {
+        this.typeDate = 'R';
+        this.dateLivraison = this.commande.dateLivraisonReelle;
+      } else {
+        this.typeDate = 'E';
+        this.dateLivraison = this.commande.dateLivraisonEstimee;
+      }
+      if (!!this.animal.poidsReel) {
+        this.typePoids = 'R';
+        this.poids = this.animal.poidsReel;
+      } else {
+        this.typePoids = 'E';
+        this.poids = this.animal.poidsEstime;
+      }
       this.txtTitre = 'Modifier la commande';
       this.txtBtnAjouter = ' Modifier la commande';
     } else {
       this.commande = new Commande('', '', '', '', '', '', '', '', '', '');
       this.animal = new Animal('', '', '', '', '', '', '', '');
       this.modeModification = false;
+      this.typeDate = 'E';
+      this.typePoids = 'E';
       this.txtTitre = 'Ajouter une commande';
       this.txtBtnAjouter = ' Ajouter la commande';
     }
-    // TODO : ne pas faire de bind tant que la modif n'est pas enregistrée
     // TODO : implémenter gestion statut
   }
 
@@ -62,6 +83,7 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
    * Complète les infos de l'animal
    */
   private completerInfoAnimal(): void {
+    this.setPoids();
     this.animal.auteurCreation = '1';
     this.animal.auteurModification = '1';
     const date = new Date().toString();
@@ -70,9 +92,21 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Affecte le poids estimé ou réel
+   */
+  private setPoids(): void {
+    if (this.typePoids === 'R') {
+      this.animal.poidsReel = this.poids;
+    } else {
+      this.animal.poidsEstime = this.poids;
+    }
+  }
+
+  /**
    * Complète les infos de la commande
    */
   private completerInfoCommande(): void {
+    this.setDateLivraison();
     this.commande.idStatut = '1';
     this.commande.auteurCreation = '1';
     this.commande.auteurModification = '1';
@@ -82,28 +116,35 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
   }
 
   /**
+   * Affecte la date de livraion estimée ou réelle
+   */
+  private setDateLivraison(): void {
+    if (this.typeDate === 'R') {
+      this.commande.dateLivraisonReelle = this.dateLivraison;
+    } else {
+      this.commande.dateLivraisonEstimee = this.dateLivraison;
+    }
+  }
+
+  /**
    * Mise à jour si besoin des infos de l'animal
    */
   private majAnimal(): void {
-    if (this.commandeAModifier[1]['numeroNational'] === this.animal.numeroNational &&
-      this.commandeAModifier[1]['poidsEstime'] === this.animal.poidsEstime) {
-      this.majCommande();
-    } else {
-      const date = new Date().toString();
-      this.animal.dateModification = date;
-      this.animal.auteurModification = '1';
-      this.animalObservable = this.animalSrvService.updateAnimal(this.animal);
-      this.animalSubscription = this.animalObservable.subscribe(
-        (a) => {
-          if (!!a) {
-            this.majCommande();
-          }
-        }, (error) => {
-          console.log(error);
-          this.msgKo = 'Une erreur est survenue lors de la modification de l\'animal';
+    // TODO : ne faire l'update de l'animal que si besoin
+    this.setPoids();
+    this.animal.dateModification = new Date().toString();
+    this.animal.auteurModification = '1';
+    this.animalObservable = this.animalSrvService.updateAnimal(this.animal);
+    this.animalSubscription = this.animalObservable.subscribe(
+      (a) => {
+        if (!!a) {
+          this.majCommande();
         }
-      );
-    }
+      }, (error) => {
+        console.log(error);
+        this.msgKo = 'Une erreur est survenue lors de la modification de l\'animal';
+      }
+    );
   }
 
   /**
@@ -128,8 +169,8 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
    * Mise à jour si besoin des infos de la commande
    */
   private majCommande(): void {
-    const date = new Date().toString();
-    this.commande.dateModification = date;
+    this.setDateLivraison();
+    this.commande.dateModification = new Date().toString();
     this.commande.auteurModification = '1';
     this.commandeObservable = this.commandeSrvService.updateCommande(this.commande);
     this.commandeSubscription = this.commandeObservable.subscribe(
