@@ -45,11 +45,9 @@ export class CommandeSrvService {
 
   /**
    * Retourne la dernière commande crée
-   * TODO : Implémenter
    */
   public getLastCommande(): Observable<JSON> {
-    const cde = this.http.get<JSON>('http://localhost:3000/commande/2');
-    return cde;
+    return this.http.get<JSON>('http://localhost:3000/commande/last/');
   }
 
   /**

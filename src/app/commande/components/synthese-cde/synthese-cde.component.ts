@@ -63,8 +63,10 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
     this.commandeSubscription = this.commandeObservable.subscribe(
       (c) => {
         this.lastCommande = c[0];
-        this.getAnimal(this.lastCommande.idAnimal);
-        this.getStat(this.lastCommande.id);
+        if (!!this.lastCommande) {
+          this.getAnimal(this.lastCommande.idAnimal);
+          this.getStat(this.lastCommande.id);
+        }
       }, (error) => {
         console.log(error);
       }

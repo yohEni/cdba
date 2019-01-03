@@ -27,7 +27,8 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   private clientSubscription;
 
   constructor(private ligneCommandeSrvService: LigneCommandeSrvService,
-              private clientSrvService: ClientSrvService, private factureSrvService: FactureSrvService) {
+              private clientSrvService: ClientSrvService,
+              private factureSrvService: FactureSrvService) {
   }
 
   ngOnInit() {
