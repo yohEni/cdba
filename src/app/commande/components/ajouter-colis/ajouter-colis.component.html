@@ -84,11 +84,11 @@
             </div>
             <div class="col-sm-5" *ngIf="isBourguignonTransforme">
                 <div class="input-group">
-                    <input type="number" name="bourguignonSteak" id="bShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.bourguignonSteakHache" minlength="1" maxlength="3">
+                    <input type="number" name="bourguignonSteak" id="bShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.bourguignonSteakHache" minlength="0" maxlength="3">
                     <div class="input-group-append"><div class="input-group-text">% Steak haché</div></div>
                 </div>
                 <div class="input-group">
-                    <input type="number" name="bourguignonVrac" id="bHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.bourguignonVrac" minlength="1" maxlength="3">
+                    <input type="number" name="bourguignonVrac" id="bHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.bourguignonVrac" minlength="0" maxlength="3">
                     <div class="input-group-append"><div class="input-group-text">% Haché vrac</div></div>
                 </div>
             </div>
@@ -109,11 +109,11 @@
             </div>
             <div class="col-sm-5" *ngIf="isPotAuFeuTransforme">
                 <div class="input-group">
-                    <input type="number" name="potAuFeuSteak" id="pShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuSteakHache" minlength="1" maxlength="3">
+                    <input type="number" name="potAuFeuSteak" id="pShPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuSteakHache" minlength="0" maxlength="3">
                     <div class="input-group-append"><div class="input-group-text">% Steak haché</div></div>
                 </div>
                 <div class="input-group">
-                    <input type="number" name="potAuFeuVrac" id="pHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuVrac" minlength="1" maxlength="3">
+                    <input type="number" name="potAuFeuVrac" id="pHvPourcentage" autocomplete="off" [(ngModel)]="ligneCommande.potAuFeuVrac" minlength="0" maxlength="3">
                     <div class="input-group-append"><div class="input-group-text">% Haché vrac</div></div>
                 </div>
             </div>

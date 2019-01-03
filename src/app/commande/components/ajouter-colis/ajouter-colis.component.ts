@@ -123,6 +123,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
    * Validation du formulaire : sauvegarde du colis
    */
   private onSubmit(): void {
+    this.msgKo = '';
     this.setInfos();
     console.log(this.ligneCommande);
   }
@@ -162,19 +163,22 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
    */
   private setInfos(): void {
     this.checkTransformation();
-    const date = new Date().toString();
-    if (!this.modeModification) {
-      this.ligneCommande.dateCommande = date;
-      this.ligneCommande.dateCreation = date;
-      this.ligneCommande.auteurCreation = 1;
+    if (!this.msgKo || this.msgKo.length === 0) {
+      const date = new Date().toString();
+      if (!this.modeModification) {
+        this.ligneCommande.dateCommande = date;
+        this.ligneCommande.dateCreation = date;
+        this.ligneCommande.auteurCreation = 1;
+      }
+      this.ligneCommande.dateModification = date;
+      this.ligneCommande.auteurModification = 1;
+      this.setPrixEstime();
     }
-    this.ligneCommande.dateModification = date;
-    this.ligneCommande.auteurModification = 1;
-    this.setPrixEstime();
   }
 
   /**
    * Affecte 0 si les valeurs sont vides
+   * Vérifie que le total de la transformation ne dépasse pas 100
    */
   private checkTransformation(): void {
     if (this.ligneCommande.bourguignonSteakHache.length === 0) {
@@ -188,6 +192,18 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     }
     if (this.ligneCommande.potAuFeuVrac.length === 0) {
       this.ligneCommande.potAuFeuVrac = 0;
+    }
+    if (this.ligneCommande.bourguignonSteakHache + this.ligneCommande.bourguignonVrac > 100) {
+      this.msgKo = 'Le total de la transformation bourguignon ne peut pas dépasser 100%';
+    }
+    if (this.ligneCommande.potAuFeuSteakHache + this.ligneCommande.potAuFeuVrac > 100) {
+      this.msgKo = 'Le total de la transformation pot au feu ne peut pas dépasser 100%';
+    }
+    if (this.isBourguignonTransforme && (this.ligneCommande.bourguignonSteakHache + this.ligneCommande.bourguignonVrac) === 0) {
+      this.msgKo = 'Merci de préciser le % de transformation du bourguignon';
+    }
+    if (this.isPotAuFeuTransforme && (this.ligneCommande.potAuFeuSteakHache + this.ligneCommande.potAuFeuVrac) === 0) {
+      this.msgKo = 'Merci de préciser le % de transformation du pot au feu';
     }
   }
 

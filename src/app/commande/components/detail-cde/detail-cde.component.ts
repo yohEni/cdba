@@ -34,6 +34,7 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.lignesClientsCommandes = [];
     this.getLignesCommandes(this.idCommande);
+    this.trierLignesClientsCommandes();
   }
 
   ngOnDestroy() {
