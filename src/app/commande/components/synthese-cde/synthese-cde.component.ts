@@ -28,6 +28,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
   private statObservable;
   private statSubscription;
   public avancement;
+  public finDeCommande: boolean;
 
   @Output() voirDetailEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() modifierCdeEvent: EventEmitter<JSON[]> = new EventEmitter<JSON[]>();
@@ -102,6 +103,10 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
       (s) => {
         this.stat = s[0];
         this.avancement = this.stat.avancement;
+        if (!!this.stat.nbColisMinRestant && this.stat.nbColisMinRestant < 4) {
+          this.finDeCommande = true;
+          // TODO : calculer le colisage possible
+        }
       }, (error) => {
         console.log(error);
       }

@@ -154,9 +154,13 @@
         </div>
         <div class="form-group">
           <div class="row">
-            <div class="col-sm-offset-2 col-sm-10">
-              <button type="submit" class="btn btn-success" [disabled]="!ajouterColisForm.form.valid"><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
-              <button class="btn btn-danger" (click)="annulerAjout(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
+            <div class="col-sm-offset-2 col-sm-10 btn-toolbar" role="toolbar">
+              <div class="btn-group mr-1" role="group" aria-label="Ajouter colis">
+                <button type="submit" class="btn btn-success" [disabled]="!ajouterColisForm.form.valid"><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
+              </div>
+              <div class="btn-group mr-1" role="group" aria-label="Annuler">
+                <button class="btn btn-danger" (click)="annulerAjout(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
+              </div>
             </div>
           </div>
         </div>

@@ -33,9 +33,7 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
    * Validation du formulaire : sauvegarde du client
    */
   public onSubmit(): void {
-    console.log('ajout des infos');
     this.setInfos();
-    console.log(this.client);
     this.addClient();
   }
 

@@ -125,7 +125,6 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private onSubmit(): void {
     this.msgKo = '';
     this.setInfos();
-    console.log(this.ligneCommande);
   }
 
   /**
@@ -216,10 +215,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.prixEstimeSubscription = this.prixEstimeObservable.subscribe(
       (p) => {
         this.idPrix = p[0].id;
-        console.log(`id prix : ${p[0].id}`);
-        console.log(`prix HT : ${p[0].prix_ht}`);
         this.ligneCommande.prixEstime = p[0].prix_ht * this.ligneCommande.poidsColis;
-        console.log(`prix estimé : ${this.ligneCommande.prixEstime}`);
         if (!!this.ligneCommande.prixEstime) {
           this.sauvColis();
         } else {
@@ -241,7 +237,6 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.ligneCommandeObservable = this.ligneCommandeSrvService.addLigneCommande(this.ligneCommande);
       this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
-        console.log(`réponse insert : ${l.insertedId}`);
         if (!!l && !!l.insertedId) {
           this.idLigneCommande = l.insertedId;
           this.getTva();
@@ -255,7 +250,6 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.ligneCommandeObservable = this.ligneCommandeSrvService.editLigneCommande(this.ligneCommande);
       this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
       (l) => {
-        console.log(`réponse : ${l}`);
         if (!!l) {
           this.getTva();
         }
@@ -275,7 +269,6 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.tvaSubscription = this.tvaObservable.subscribe(
       (t) => {
         if (!!t && !!t[0].id) {
-          console.log(`idTva : ${t[0].id}`);
           this.idTva = t[0].id;
           if (!this.modeModification) {
             this.createFacture();
@@ -304,14 +297,13 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       auteurCreation: '1',
       auteurModification: '1'
     }];
-    console.log(this.ligneFacture);
     this.factureObservable = this.factureService.addFacture(this.ligneFacture);
     this.factureSubscription = this.factureObservable.subscribe(
       (f) => {
-        console.log(f);
-        // TODO : récup id facture ?
+        if (!!f && !!f.insertedId) {
+          this.ligneFacture.id = f.insertedId;
+        }
         this.setMsgOk('Colis ajouté avec succès');
-        // TODO : fermer le détail et raffraichir la liste des lignesCommande
         this.apresAjout.emit();
         // TODO : ou plutôt changer l'intitulé des boutons et proposer un update ?
       }, (error) => {
@@ -331,10 +323,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
     this.factureObservable = this.factureService.editFacture(this.ligneFacture);
     this.factureSubscription = this.factureObservable.subscribe(
       (f) => {
-        console.log(f);
-        // TODO : récup id facture ?
         this.setMsgOk('Colis modifié avec succès');
-        // TODO : fermer le détail et raffraichir la liste des lignesCommande
         this.apresAjout.emit();
         // TODO : ou plutôt changer l'intitulé des boutons et proposer un update ?
       }, (error) => {
