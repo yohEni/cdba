@@ -55,16 +55,15 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
-                    <ngb-progressbar showValue="true" type="info" [value]="progressionCde" [max]="100">
-                        <!--{{progressionCde}}-->
+                    <ngb-progressbar showValue="true" type="info" [value]="avancement" [max]="100">
                     </ngb-progressbar>
                 </p>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <p><strong *ngIf="stat">{{stat.kgRestant}} Kg restants, <span style="white-space: nowrap;">soit {{colisMinRestant | number}} à
-                            {{colisMaxRestant | number}} colis</span></strong></p>
+                <p><strong *ngIf="stat">{{stat.kgRestant}} Kg restants, <span style="white-space: nowrap;">soit {{stat.nbColisMinRestant}} à
+                            {{stat.nbColisMaxRestant}} colis</span></strong></p>
             </div>
         </div>
     </div>

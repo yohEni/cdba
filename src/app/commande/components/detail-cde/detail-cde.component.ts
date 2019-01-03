@@ -26,10 +26,6 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   private clientObservable;
   private clientSubscription;
 
-  // Bouchon
-  refCde = 1;
-  cde = [];
-
   constructor(private ligneCommandeSrvService: LigneCommandeSrvService,
               private clientSrvService: ClientSrvService, private factureSrvService: FactureSrvService) {
   }
@@ -37,7 +33,6 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.lignesClientsCommandes = [];
     this.getLignesCommandes(this.idCommande);
-    // this.setBouchon();
   }
 
   ngOnDestroy() {
@@ -70,6 +65,7 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
               'client': c[0]
             };
             this.lignesClientsCommandes.push(this.ligneClientCommande);
+            this.trierLignesClientsCommandes();
           }, (error) => {
             console.log(error);
           }
@@ -79,6 +75,15 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
+  }
+
+  /**
+   * Trie le tableau par date de création des colis
+   */
+  private trierLignesClientsCommandes(): void {
+    this.lignesClientsCommandes.sort((a, b) => {
+      return a.ligneCommande.dateCreation - b.ligneCommande.dateCreation;
+    });
   }
 
   /**
@@ -138,43 +143,7 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
     this.setNoDetail();
     this.lignesClientsCommandes.length = 0;
     this.getLignesCommandes(this.idCommande);
+    // Appel de nouveau le tri pour éviter pb de la dernière ligne
+    this.trierLignesClientsCommandes();
   }
-
-  /**
-   * Bouchon
-   */
-  private setBouchon(): void {
-    const client1 = {
-      id : 1,
-      nom : 'DUPOND',
-      prenom : 'Jean',
-      ville : 'Sérent',
-      telephone : '06 12 34 56 78',
-      colis : '15 Kg',
-      statut : 'En attente',
-      label : 'info'
-    };
-    const client2 = {
-      id : 2,
-      nom : 'MARTIN',
-      prenom : 'Paul',
-      ville : 'Malestroit',
-      telephone : '02 97 74 12 34',
-      colis : '12 Kg',
-      statut : 'Livré',
-      label : 'warning'
-    };
-    const client3 = {
-      id : 3,
-      nom : 'DURAND',
-      prenom : 'Eric',
-      ville : 'Lizio',
-      telephone : '06 12 34 56 78',
-      colis : '20 Kg',
-      statut : 'Payé',
-      label : 'success'
-    };
-    this.cde.push(client1, client2, client3);
-  }
-
 }

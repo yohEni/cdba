@@ -19,29 +19,27 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
   private commandeSubscription;
 
   public animal;
-  private animalObservable;
-  private animalSubscription;
   public numRadical: string;
   public numTravail: string;
+  private animalObservable;
+  private animalSubscription;
 
   public stat;
   private statObservable;
   private statSubscription;
+  public avancement;
 
   @Output() voirDetailEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() modifierCdeEvent: EventEmitter<JSON[]> = new EventEmitter<JSON[]>();
   @Output() ajouterCdeEvent: EventEmitter<any> = new EventEmitter<any>();
-
-  // Bouchon
-  progressionCde = 0;
-  colisMinRestant = 0;
-  colisMaxRestant = 0;
 
   constructor(private commandeSrvService: CommandeSrvService,
               private animalSrvService: AnimalSrvService,
               private ligneCommandeSrvService: LigneCommandeSrvService) { }
 
   ngOnInit() {
+    // Stockage dans variable pour effet d'animation
+    this.avancement = 0;
     this.getLastCommande();
   }
 
@@ -101,10 +99,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
     this.statSubscription = this.statObservable.subscribe(
       (s) => {
         this.stat = s[0];
-        console.log(this.stat);
-        this.colisMaxRestant = Math.floor(this.stat.kgRestant / 12);
-        this.colisMinRestant = Math.floor(this.stat.kgRestant / 20);
-        this.progressionCde = Math.round(this.stat.avancement);
+        this.avancement = this.stat.avancement;
       }, (error) => {
         console.log(error);
       }
