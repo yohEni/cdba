@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angular/core';
 import { CommandeSrvService } from '../../services/commande-srv.service';
 import { Observable } from 'rxjs';
 import { AnimalSrvService } from '../../services/animal-srv.service';
@@ -30,6 +30,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
   public avancement;
   public finDeCommande: boolean;
 
+  @Output() ajouterColisEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() voirDetailEvent: EventEmitter<string> = new EventEmitter<string>();
   @Output() modifierCdeEvent: EventEmitter<JSON[]> = new EventEmitter<JSON[]>();
   @Output() ajouterCdeEvent: EventEmitter<any> = new EventEmitter<any>();
@@ -97,7 +98,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
    * Récupère les stats de la commande
    * @param id id de la commande
    */
-  private getStat(id: string): void {
+  public getStat(id: string): void {
     this.statObservable = this.ligneCommandeSrvService.getStatLignesCommande(id);
     this.statSubscription = this.statObservable.subscribe(
       (s) => {
@@ -111,6 +112,14 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
+  }
+
+  /**
+   * Affiche l'ajout d'un colis
+   * @param evt id de la commande concernée
+   */
+  private onAjouterColis(evt): void {
+    this.ajouterColisEvent.emit(this.lastCommande.id);
   }
 
   /**

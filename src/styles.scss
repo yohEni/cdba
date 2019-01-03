@@ -7,3 +7,9 @@ $fa-font-path: "/assets/scss/webfonts";
 @import "~@fortawesome/fontawesome-free/scss/brands";
 
 .btn { border-radius: 0; }
+
+.btn[disabled] {
+    background-color: darkgrey;
+    border-color: darkgrey;
+    color: white;
+}

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnDestroy, Output, EventEmitter } from '@angu
 import { LigneCommandeSrvService } from '../../services/ligne-commande-srv.service';
 import { ClientSrvService } from '../../../client/services/client-srv.service';
 import { FactureSrvService } from '../../services/facture-srv.service';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
   selector: 'app-detail-cde',
@@ -26,7 +27,8 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
   private clientObservable;
   private clientSubscription;
 
-  constructor(private ligneCommandeSrvService: LigneCommandeSrvService,
+  constructor(private viewportScroller: ViewportScroller,
+              private ligneCommandeSrvService: LigneCommandeSrvService,
               private clientSrvService: ClientSrvService,
               private factureSrvService: FactureSrvService) {
   }
@@ -35,6 +37,7 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
     this.lignesClientsCommandes = [];
     this.getLignesCommandes(this.idCommande);
     this.trierLignesClientsCommandes();
+    this.viewportScroller.scrollToAnchor('titreDetailCommande');
   }
 
   ngOnDestroy() {

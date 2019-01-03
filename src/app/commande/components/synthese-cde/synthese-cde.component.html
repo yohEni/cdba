@@ -62,8 +62,12 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <p><strong *ngIf="stat">{{stat.kgRestant}} Kg restants, <span style="white-space: nowrap;">soit {{stat.nbColisMinRestant}} à
-                            {{stat.nbColisMaxRestant}} colis</span></strong></p>
+                <p>
+                    <strong *ngIf="stat">{{stat.kgRestant}} Kg restants, 
+                        <span id="txtStat">soit {{stat.nbColisMinRestant}} <span *ngIf="stat.nbColisMinRestant != stat.nbColisMaxRestant">à
+                            {{stat.nbColisMaxRestant}} </span>colis</span>
+                    </strong>
+                </p>
             </div>
         </div>
     </div>
@@ -72,7 +76,7 @@
 <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 btn-toolbar" role="toolbar" aria-label="barre d'action">
         <div class="btn-group mr-1" role="group" aria-label="Ajouter colis">
-            <button class="btn btn-primary" (click)="onVoirDetail()"><i class="fas fa-plus"></i> Ajouter un colis</button>
+            <button class="btn btn-primary" (click)="onAjouterColis()"><i class="fas fa-plus"></i> Ajouter un colis</button>
         </div>
         <div class="btn-group mr-1" role="group" aria-label="Voir colis">
             <button class="btn btn-info" (click)="onVoirDetail()"><i class="fas fa-search"></i> Voir les colis</button>

@@ -1,3 +1,4 @@
-<app-synthese-cde (voirDetailEvent)="setIdCommande($event)" (modifierCdeEvent)="setCommande($event)" (ajouterCdeEvent)="showAjouterCommande()"></app-synthese-cde>
-<span *ngIf="idCommande"><app-detail-cde [idCommande]=idCommande></app-detail-cde></span>
+<app-synthese-cde (ajouterColisEvent)="voirAjoutColis($event)" (voirDetailEvent)="voirDetail($event)" (modifierCdeEvent)="setCommande($event)" (ajouterCdeEvent)="showAjouterCommande()"></app-synthese-cde>
+<span *ngIf="showDetailCde"><app-detail-cde [idCommande]=idCommande></app-detail-cde></span>
 <span *ngIf="showAjoutModifCde"><app-ajouter-cde [commandeAModifier]=commande (annulerEvent)="annulerAjoutModif()"></app-ajouter-cde></span>
+<span *ngIf="showAjoutColis"><app-ajouter-colis [idCommandeColis]=idCommande (fermerAjout)="annulerAjoutColis()" (apresAjout)="refreshSynthese()"></app-ajouter-colis></span>
