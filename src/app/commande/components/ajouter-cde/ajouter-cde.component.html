@@ -21,7 +21,7 @@
           <div class="col-sm-10">
             <div class="input-group">
                 <input type="number" name="poids" id="poids" autocomplete="off" [(ngModel)]="poids" minlength="3" maxlength="3">
-                <span class="input-group-append"><div class="input-group-text">Kg</div></span>
+                <span class="input-group-append"><div class="input-group-text mr-1">Kg</div></span>
                 <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTypePoids" [(ngModel)]="typePoids" required>
                   <label ngbButtonLabel class="btn-primary">
                     <input ngbButton type="radio" name="typePoidsE" id="poidsEstime" autocomplete="off" value= "E"> Estimé
@@ -36,15 +36,18 @@
         <div class="form-group row">
           <label for="dateER" class="col-sm-2 control-label">Date dispo</label>
           <div class="col-sm-10">
-            <input type="date" name="dateER" id="dateEstimeeReelle" autocomplete="off" [ngModel]="dateLivraison | date:'yyyy-MM-dd'" (ngModelChange)="dateLivraison = $event">
-            <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTypeDate" [(ngModel)]="typeDate" required>
-              <label ngbButtonLabel class="btn-primary">
-                <input ngbButton type="radio" name="typeDateE" id="dateEstimee" autocomplete="off" value= "E"> Estimée
-              </label>
-              <label ngbButtonLabel class="btn-primary">
-                <input ngbButton type="radio" name="typeDateR" id="dateReelle" autocomplete="off" value= "R"> Réelle
-              </label>
-            </div>
+              <div class="input-group">
+                <input type="date" name="dateER" id="dateEstimeeReelle" autocomplete="off" [ngModel]="dateLivraison | date:'yyyy-MM-dd'" (ngModelChange)="dateLivraison = $event">
+                <span class="input-group-append"><div class="input-group-text mr-1"><i class="fas fa-calendar-alt"></i></div></span>
+                <div class="btn-group btn-group-toggle" ngbRadioGroup name="radioTypeDate" [(ngModel)]="typeDate" required>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="typeDateE" id="dateEstimee" autocomplete="off" value= "E"> Estimée
+                  </label>
+                  <label ngbButtonLabel class="btn-primary">
+                    <input ngbButton type="radio" name="typeDateR" id="dateReelle" autocomplete="off" value= "R"> Réelle
+                  </label>
+                </div>
+              </div>
           </div>
         </div>
         <div class="row" *ngIf="msgOk">
@@ -54,9 +57,13 @@
           <div class="col-sm-10 alert alert-danger">{{msgKo}}</div>
         </div>
         <div class="form-group row">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-success" [disabled]="!ajouterCommandeForm.form.valid" ><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
-            <button class="btn btn-danger" (click)="onAnnuler(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
+          <div class="col-sm-offset-2 col-sm-10 btn-toolbar" role="toolbar" aria-label="barre d'action">
+              <div class="btn-group mr-1" role="group" aria-label="Ajouter commande">
+                <button type="submit" class="btn btn-success" [disabled]="!ajouterCommandeForm.form.valid" ><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
+              </div>
+              <div class="btn-group mr-1" role="group" aria-label="Annuler">
+                <button class="btn btn-danger" (click)="onAnnuler(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
+              </div>
           </div>
         </div>
       </form>
