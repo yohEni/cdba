@@ -12,6 +12,7 @@ import { ViewportScroller } from '@angular/common';
 export class DetailCdeComponent implements OnInit, OnDestroy {
 
   @Input() idCommande: string;
+  @Output() apresChangementEvent: EventEmitter<any> = new EventEmitter<any>();
   private ligneCommandeObservable;
   private ligneCommandeSubscription;
   private lignesCommandes;
@@ -150,5 +151,6 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
     this.getLignesCommandes(this.idCommande);
     // Appel de nouveau le tri pour éviter pb de la dernière ligne
     this.trierLignesClientsCommandes();
+    this.apresChangementEvent.emit();
   }
 }

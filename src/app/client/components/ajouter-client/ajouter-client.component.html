@@ -1,7 +1,6 @@
-<!-- Ajouter un client -->
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <h3>Ajouter un client</h3>
+      <h3 [innerHTML]="txtTitre" id="titreAjouterUnClient"></h3>
   </div>
 </div>
 <hr>
@@ -61,10 +60,15 @@
             <span>{{msgKo}}</span>
           </div>
         </div>
+        <div class="row" id="msgKo">
+            <div class="col-sm-12 alert alert-success" *ngIf="msgOk">
+              <span>{{msgOk}}</span>
+            </div>
+        </div>
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10 btn-toolbar" role="toolbar" aria-label="barre d'action">
               <div class="btn-group mr-1" role="group" aria-label="Ajouter client">
-                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i>  Ajouter le client</button>
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
               </div>
               <div class="btn-group mr-1" role="group" aria-label="Annuler">
                 <button class="btn btn-danger" (click)="cancelAdd(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>

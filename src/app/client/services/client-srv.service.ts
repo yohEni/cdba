@@ -28,6 +28,14 @@ export class ClientSrvService {
   }
 
   /**
+   * Retourne les commande d'id client passé en paramètre
+   * @param id: string
+   */
+  public getHistoriqueClient(id: string): Observable<JSON> {
+    return this.http.get<JSON>(`http://localhost:3000/ligneCommande/client/${id}`);
+  }
+
+  /**
    * Retourne les clients
    */
   public getClients(): Observable<JSON> {
@@ -40,5 +48,13 @@ export class ClientSrvService {
   public addClient(client: JSON): Observable<JSON> {
     // TODO : à tester
     return this.http.post<JSON>('http://localhost:3000/client', client, this.httpOptions);
+  }
+
+  /**
+   * Modifie le client
+   */
+  public updateClient(client: JSON): Observable<JSON> {
+    // TODO : à tester
+    return this.http.put<JSON>('http://localhost:3000/client', client, this.httpOptions);
   }
 }

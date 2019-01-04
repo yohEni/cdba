@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+      <div class="input-group">  
+        <label for="chercherClient" class="sr-only">Chercher un client</label>
+        <span class="input-group-append"><div class="input-group-text"><i class="fas fa-search"></i></div></span>
+        <input id="chercherClient" type="text" class="form-control" placeholder="Filtrer" [(ngModel)]="model" [ngbTypeahead]="search" [resultFormatter]="formatMatches" [inputFormatter]="formatMatches"/>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="divBtnAjoutClient"><button class="btn btn-primary" (click)="ajouterClient()"><i class="fas fa-plus"></i> Ajouter un client</button></div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"class="hidden-xs hidden-sm"></th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Prénom</th>
+                    <th scope="col" class="hidden-xs hidden-sm">Commune</th>
+                    <th scope="col" class="hidden-xs">Téléphone 1</th>
+                    <th scope="col">Téléphone 2</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let ligne of clients; index as i">
+                <tr (click)="onAfficherDetail(i)" id="ligneTableau">
+                    <th scope="row" class="hidden-xs hidden-sm">{{i+1}}</th>
+                    <td>{{ligne.nom | uppercase}}</td>
+                    <td>{{ligne.prenom | titlecase}}</td>
+                    <td class="hidden-xs hidden-sm">{{ligne.ville | titlecase}}</td>
+                    <td>{{ligne.telephone1 | telephonePipe}}</td>
+                    <td class="hidden-xs"><span *ngIf="ligne.telephone2">{{ligne.telephone2 | telephonePipe}}</span></td>
+                    <td>
+                        <button class="btn btn-outline-secondary" (click)="onAfficherDetail(i)"><i class="fas fa-search"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 offset-sm-6 col-md-6 offset-md-6 col-lg-6 offset-lg-6">
+        <div class="divBtnAjoutClient"><a href="/client/ajouter" routerLink="/client/ajouter"><button class="btn btn-primary"><i class="fas fa-plus"></i> Ajouter un client</button></a></div>
+    </div>
+  </div>
+  <br>
+  <br>

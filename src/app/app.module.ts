@@ -14,6 +14,8 @@ import { AjouterCdeComponent } from './commande/components/ajouter-cde/ajouter-c
 import { AjouterClientComponent } from './client/components/ajouter-client/ajouter-client.component';
 import { AjouterColisComponent } from './commande/components/ajouter-colis/ajouter-colis.component';
 import { DetailColisComponent } from './commande/components/detail-cde/detail-colis/detail-colis.component';
+import { ContainerClientComponent } from './client/components/container-client/container-client.component';
+import { ClientModule } from './client/client.module';
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
@@ -23,6 +25,7 @@ const appRoutes: Routes = [
   { path: 'commande/ajouter', component: AjouterCdeComponent },
   { path: 'colis/detail/:id', component: DetailColisComponent },
   { path: 'colis/ajouter/:id', component: AjouterColisComponent },
+  { path: 'clients', component: ContainerClientComponent },
   { path: 'client/ajouter', component: AjouterClientComponent },
   { path: '',
     redirectTo: 'commande/last',
@@ -44,7 +47,8 @@ const appRoutes: Routes = [
     HttpClientModule,
     NgbModule.forRoot(),
     SharedModule,
-    CommandeModule
+    CommandeModule,
+    ClientModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'fr-FR' }],
   bootstrap: [AppComponent]

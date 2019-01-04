@@ -1,0 +1,115 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h3 id="titreDetailClient">Détail du client</h3>
+    </div>
+  </div>
+  <hr>
+  <div class="row hidden-xs hidden-sm">
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <em>Client crée par </em><span style="white-space: nowrap;">{{client.auteurCreation}} </span>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <em>le </em><span style="white-space: nowrap;">{{client.dateCreation | date: 'dd/MM/yyyy HH:mm'}}</span>
+    </div>
+    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+        <em>modifié le</em> {{client.dateModification | date: 'dd/MM/yyyy HH:mm'}}
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <em>Infos client</em>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <em>Historique de commande</em>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <div class="row">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <p><i class="fas fa-user"></i></p>
+            </div>
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <p><strong>{{client.prenom | titlecase}} {{client.nom | uppercase}}</strong></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <p><i class="fas fa-home"></i></p>
+            </div>
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <p>{{client.adresse}}<br>{{client.codePostal}} {{client.ville | titlecase}}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <p><i class="fas fa-phone"></i></p>
+            </div>
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+              <p>
+                  {{client.telephone1 | telephonePipe}}
+                  <br>
+                  <span *ngIf="!!client.telephone2">{{client.telephone2 | telephonePipe}}</span>
+              </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1">
+                <p><i class="fas fa-envelope"></i></p>
+            </div>
+            <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
+                <p><span *ngIf="!!client.mail">{{client.mail}}</span></p>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"class="hidden-xs hidden-sm"></th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Colis</th>
+                    <th scope="col" class="hidden-xs hidden-sm">Statut</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody *ngFor="let ligne of lignesCommandesClient; index as i">
+                <tr (click)="onAfficherDetailLigneCommande(i)" id="ligneTableau">
+                    <th scope="row" class="hidden-xs hidden-sm">{{i+1}}</th>
+                    <td>{{ligne.dateCommande | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{ligne.poidsColis}} Kg</td>
+                    <td class="hidden-xs hidden-sm"><span class="badge badge-info">{{ligne.titreStatut}}</span></td>
+                    <td>
+                        <button class="btn btn-outline-secondary"><i class="fas fa-search"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+  </div>
+  <br>
+  <ng-template #modaleSuppressionClient let-modal>
+      <div class="modal-header">
+        <h4 class="modal-title" id="titreModaleSuppressionClient">Suppression du client</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Confirmez-vous la suppression de ce client ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Annuler')">Annuler</button>
+        <button type="button" class="btn btn-danger" (click)="modal.close('Supprimer')">Supprimer</button>
+      </div>
+    </ng-template>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <button class="btn btn-info" (click)="onFermer()"><i class="fas fa-door-open"></i> Fermer</button>
+        <button class="btn btn-primary" (click)="modifierClient()"><i class="fas fa-pen"></i> Modifier</button>
+        <button class="btn btn-danger" (click)="open(modaleSuppressionClient)"><i class="fas fa-trash"></i> Supprimer le client</button>
+        
+    </div>
+  </div>

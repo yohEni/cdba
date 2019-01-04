@@ -219,7 +219,8 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
    * Envoi d'un event pour fermer
    */
   public onAnnuler(): void {
-    // TODO : vider les champs du formulaire dans le cas où l'affichage est standalone
+    this.commande = new Commande('', '', '', '', '', '', '', '', '', '');
+    this.animal = new Animal('', '', '', '', '', '', '', '');
     this.annulerEvent.emit(event);
   }
 

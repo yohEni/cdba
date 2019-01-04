@@ -1,0 +1,3 @@
+<app-liste-client (afficherDetailEvent)="setClient($event)" (ajouterClientEvent)="showAjout()"></app-liste-client>
+<span *ngIf="client"><app-detail-client [client]="client" (fermerDetail)="fermerDetail()" (modifierEvent)="setClientAModifier($event)"></app-detail-client></span>
+<span *ngIf="showAjoutModif"><app-ajouter-client [clientAModifier]="clientAModifier" (fermerAjoutClient)="fermerAjout()"></app-ajouter-client></span>
