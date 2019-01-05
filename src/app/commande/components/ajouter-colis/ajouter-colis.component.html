@@ -25,7 +25,14 @@
             </div>
           </div>
         </div>
-        <span *ngIf="showAjouterClient"><app-ajouter-client (fermerAjoutClient)="setClientAjoute($event)"></app-ajouter-client></span>
+        <div *ngIf="showAjouterClient">
+          <div class="row">
+            <div class="col offset-1">
+              <app-ajouter-client (fermerAjoutClient)="setClientAjoute($event)"></app-ajouter-client>
+            </div>
+          </div>
+          <br>
+        </div>
         <div class="form-group">
           <div class="row">
             <label for="optionTaille" class="col-sm-2 control-label">Taille de colis</label>

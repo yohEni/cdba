@@ -7,53 +7,93 @@
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <form class="form-horizontal" #ajouterClientForm="ngForm" (submit)="onSubmit()">
-        <div class="form-group">
-          <label for="nom" class="col-sm-2 control-label">Nom</label>
+        <div class="form-group row">
+          <label for="nom" class="col-sm-2 control-label"><strong>Nom</strong></label>
           <div class="col-sm-10">
-            <input type="text" name="nom" id="nom" [(ngModel)]="client.nom" autocomplete="off" required>
+            <input type="text" name="nom" id="nom" #cNom="ngModel" [(ngModel)]="client.nom" autocomplete="off" required>
           </div>
         </div>
-        <div class="form-group">
-          <label for="prenom" class="col-sm-2 control-label">Prénom</label>
-          <div class="col-sm-10">
-            <input type="text" name="prenom" id="prenom" [(ngModel)]="client.prenom" autocomplete="off" required>
+        <div class="row">
+          <div class="col-sm-4 alert alert-danger" *ngIf="cNom.invalid && (cNom.dirty || cNom.touched)">
+            Merci de renseigner un nom
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group row">
+          <label for="prenom" class="col-sm-2 control-label"><strong>Prénom</strong></label>
+          <div class="col-sm-10">
+            <input type="text" name="prenom" id="prenom" #cPrenom="ngModel" [(ngModel)]="client.prenom" autocomplete="off" required>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cPrenom.invalid && (cPrenom.dirty || cPrenom.touched)">
+              Merci de renseigner un prénom
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="adresse" class="col-sm-2 control-label">Adresse</label>
           <div class="col-sm-10">
-            <input type="text" name="adresse" id="adresse" [(ngModel)]="client.adresse" autocomplete="off" required>
+            <input type="text" name="adresse" id="adresse" #cAdresse="ngModel" [(ngModel)]="client.adresse" autocomplete="off" required>
           </div>
         </div>
-        <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cAdresse.invalid && (cAdresse.dirty || cAdresse.touched)">
+              Merci de renseigner une adresse
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="codePostal" class="col-sm-2 control-label">Code Postal</label>
           <div class="col-sm-10">
-            <input type="number" name="codePostal" id="codePostal" [(ngModel)]="client.codePostal" autocomplete="off" required minlength="5" maxlength="5"> 
+            <input type="number" name="codePostal" id="codePostal" #cCodePostal="ngModel" [(ngModel)]="client.codePostal" autocomplete="off" required minlength="5" maxlength="5"> 
           </div>
         </div>
-        <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cCodePostal.invalid && (cCodePostal.dirty || cCodePostal.touched)">
+              Merci de renseigner un code postal valide
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="ville" class="col-sm-2 control-label">Ville</label>
           <div class="col-sm-10">
-            <input type="text" name="ville" id="ville" [(ngModel)]="client.ville" autocomplete="off" required>
+            <input type="text" name="ville" id="ville" #cVille="ngModel" [(ngModel)]="client.ville" autocomplete="off" required>
           </div>
         </div>
-        <div class="form-group">
-          <label for="telephone1" class="col-sm-2 control-label">Téléphone 1</label>
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cVille.invalid && (cVille.dirty || cVille.touched)">
+              Merci de renseigner une ville
+            </div>
+        </div>
+        <div class="form-group row">
+          <label for="telephone1" class="col-sm-2 control-label"><strong>Téléphone 1</strong></label>
           <div class="col-sm-10">
-            <input type="text" name="telephone1" id="telephone" [(ngModel)]="client.telephone1" autocomplete="off" required minlength="10">
+            <input type="text" name="telephone1" id="telephone" #cTelephone1="ngModel" [(ngModel)]="client.telephone1" autocomplete="off" required minlength="10">
           </div>
         </div>
-        <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cTelephone1.invalid && (cTelephone1.dirty || cTelephone1.touched)">
+              Merci de renseigner un numéro valide
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="telephone2" class="col-sm-2 control-label">Téléphone 2</label>
           <div class="col-sm-10">
-            <input type="text" name="telephone2" id="telephone" [(ngModel)]="client.telephone2" autocomplete="off">
+            <input type="text" name="telephone2" id="telephone" #cTelephone2="ngModel" [(ngModel)]="client.telephone2" autocomplete="off">
           </div>
         </div>
-        <div class="form-group">
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cTelephone2.invalid && (cTelephone2.dirty || cTelephone2.touched)">
+              Merci de renseigner un numéro valide
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="email" class="col-sm-2 control-label">Mail</label>
           <div class="col-sm-10">
-            <input type="email" name="email" id="email" [(ngModel)]="client.mail" autocomplete="off">
+            <input type="email" name="email" id="email" #cMail="ngModel" [(ngModel)]="client.mail" autocomplete="off">
           </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 alert alert-danger" *ngIf="cMail.invalid && (cMail.dirty || cMail.touched)">
+              Merci de renseigner une adresse mail valide
+            </div>
         </div>
         <div class="row" id="msgKo">
           <div class="col-sm-12 alert alert-danger" *ngIf="msgKo">
@@ -68,7 +108,7 @@
         <div class="form-group">
           <div class="col-sm-offset-2 col-sm-10 btn-toolbar" role="toolbar" aria-label="barre d'action">
               <div class="btn-group mr-1" role="group" aria-label="Ajouter client">
-                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
+                <button type="submit" class="btn btn-success" [disabled]="!ajouterClientForm.form.valid"><i class="fas fa-check"></i><span [innerHTML]="txtBtnAjouter"></span></button>
               </div>
               <div class="btn-group mr-1" role="group" aria-label="Annuler">
                 <button class="btn btn-danger" (click)="cancelAdd(); $event.preventDefault()"><i class="fas fa-times"></i> Annuler</button>
@@ -77,4 +117,5 @@
         </div>
       </form>
   </div>
+  <br>
 </div>

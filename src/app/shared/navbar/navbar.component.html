@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" *ngIf="isLoggedIn$ | async">
   <div class="container-fluid">
       <a class="navbar-brand" href="/commande/last" routerLink="/commande/last">Colis de Bolin</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,7 +32,7 @@
       </ul>
       <ul class="navbar-nav navbar-right">
         <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-user"></i> {{user}}</a></li>
-        <li class="nav-item"><a class="nav-link" href="/login" routerLink="/login"><i class="fas fa-power-off"></i> Déconnexion</a></li>
+        <li class="nav-item"><a class="nav-link" (click)="onLogout()" *ngIf="isLoggedIn$ | async"><i class="fas fa-power-off"></i> Déconnexion</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->

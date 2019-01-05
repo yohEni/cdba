@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TelephonePipe } from './pipes/telephone.pipe';
-import { LoginPageComponent } from './login-page/login-page.component';
 
 @NgModule({
-  declarations: [NavbarComponent, TelephonePipe, LoginPageComponent],
+  declarations: [NavbarComponent, TelephonePipe],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule
   ],
-  exports: [NavbarComponent, LoginPageComponent, TelephonePipe]
+  exports: [
+    NavbarComponent,
+    TelephonePipe,
+    FormsModule,
+    ReactiveFormsModule
+  ]
 })
 export class SharedModule { }

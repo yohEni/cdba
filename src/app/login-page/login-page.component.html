@@ -1,0 +1,43 @@
+<div class="row">
+  <div class="col-xs-8 offset-xs-2 col-sm-8 offset-sm-2 col-md-8 offset-md-2 col-lg-4 offset-lg-4 col-xl-4 offset-xl-4">
+    <div class="card">
+      <img src="../../../assets/img/HeaderLoginPage.png" class="card-img-top" alt="Logo GAEC GOIBIER">
+      <div class="card-body">
+        <br>
+        <div class="card-text">
+          <form class="form-horizontal" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="form-group row">
+              <div class="col">
+                <div class="input-group input-group-lg">
+                  <span class="input-group-append"><div class="input-group-text"><i class="fas fa-user"></i><span class="sr-only">Identifiant</span></div></span>
+                  <input type="mail" placeholder=" Adresse mail" autocomplete="off" formControlName="login" required>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="isFieldInvalid('login')">
+              <div class="col">
+                <p class="alert alert-danger">L'adresse mail est incorrecte</p>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col">
+                <div class="input-group input-group-lg">
+                  <span class="input-group-append"><div class="input-group-text"><i class="fas fa-lock"></i><span class="sr-only">Mot de passe</span></div></span>  
+                  <input type="password" placeholder=" Mot de passe" autocomplete="off" formControlName="password" required>
+                </div>
+              </div>
+            </div>
+            <div class="row" *ngIf="isFieldInvalid('password')">
+              <div class="col">
+                <p class="alert alert-danger">Le mot de passe est incorrect</p>
+              </div>
+            </div>
+            <br>
+            <div id="divBtnConnexion"><button class="btn btn-primary">Se connecter</button></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
