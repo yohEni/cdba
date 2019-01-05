@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy, Output, EventEmitter, Input } from '@angu
 import { CommandeSrvService } from '../../services/commande-srv.service';
 import { Observable } from 'rxjs';
 import { AnimalSrvService } from '../../services/animal-srv.service';
-
 import { Animal } from '../../../shared/modeles/animal.model';
 import { LigneCommandeSrvService } from '../../services/ligne-commande-srv.service';
 
@@ -28,6 +27,8 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
   private statObservable;
   private statSubscription;
   public avancement;
+  public typeProgressBar = 'info';
+  public depassement: boolean;
   public finDeCommande: boolean;
 
   @Output() ajouterColisEvent: EventEmitter<string> = new EventEmitter<string>();
@@ -42,6 +43,7 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // Stockage dans variable pour effet d'animation
     this.avancement = 0;
+    this.depassement = false;
     this.getLastCommande();
   }
 
@@ -104,6 +106,16 @@ export class SyntheseCdeComponent implements OnInit, OnDestroy {
       (s) => {
         this.stat = s[0];
         this.avancement = this.stat.avancement;
+        if (!!this.avancement && this.avancement === 100) {
+          this.typeProgressBar = 'success';
+          this.depassement = false;
+        } else if (!!this.stat.nbColisMinRestant && this.stat.nbColisMinRestant < 0) {
+          this.typeProgressBar = 'danger';
+          this.depassement = true;
+        } else {
+          this.typeProgressBar = 'info';
+          this.depassement = false;
+        }
         if (!!this.stat.nbColisMinRestant && this.stat.nbColisMinRestant < 4) {
           this.finDeCommande = true;
           // TODO : calculer le colisage possible

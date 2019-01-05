@@ -89,11 +89,9 @@ export class DetailColisComponent implements OnInit, OnDestroy {
    */
   private supprimerFacture() {
     if (!!this.facture && !!this.facture.id) {
-      console.log(`appel de la suppression pour l\'id ${this.facture.id} de la facture`);
       this.factureObservable = this.factureSrvService.removeFacture(this.facture.id);
       this.factureSubscription = this.factureObservable.subscribe(
         (f) => {
-          console.log(f);
           if (!!f) {
             this.supprimerColis();
           }
@@ -112,11 +110,9 @@ export class DetailColisComponent implements OnInit, OnDestroy {
    * Supprime le colis
    */
   private supprimerColis() {
-    console.log(`appel de la suppression pour l\'idLigneCommande ${this.ligneCommandeClient.ligneCommande.id}`);
     this.ligneCommandeObservable = this.ligneCommandeSrvService.removeLigneCommande(this.ligneCommandeClient.ligneCommande.id);
     this.ligneCommandeSubscription = this.ligneCommandeObservable.subscribe(
     (l) => {
-      console.log(l);
       this.apresSuppression.emit(event);
     }, (error) => {
       console.log('Erreur lors de la suppression du colis');

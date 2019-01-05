@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
-                    <ngb-progressbar showValue="true" type="info" [value]="avancement" [max]="100">
+                    <ngb-progressbar showValue="true" [type]="typeProgressBar" [value]="avancement" [max]="100">
                     </ngb-progressbar>
                 </p>
             </div>
@@ -59,7 +59,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <p>
-                    <strong *ngIf="stat">{{stat.kgRestant}} Kg restants, 
+                    <strong *ngIf="stat" [ngClass]="depassement ? 'text-danger' : 'text-body'">{{stat.kgRestant}} Kg restants, 
                         <span id="txtStat">soit {{stat.nbColisMinRestant}} <span *ngIf="stat.nbColisMinRestant != stat.nbColisMaxRestant">à
                             {{stat.nbColisMaxRestant}} </span>colis</span>
                     </strong>

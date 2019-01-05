@@ -16,12 +16,12 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col"class="hidden-xs hidden-sm"></th>
+                    <th scope="col" class="hidden-xs hidden-sm"></th>
                     <th scope="col">Nom</th>
                     <th scope="col">Prénom</th>
-                    <th scope="col" class="hidden-xs hidden-sm">Commune</th>
-                    <th scope="col" class="hidden-xs">Téléphone 1</th>
-                    <th scope="col">Téléphone 2</th>
+                    <th scope="col" class="hidden-xs hidden-sm hidden-md">Commune</th>
+                    <th scope="col" >Téléphone 1</th>
+                    <th scope="col" class="hidden-xs hidden-sm">Téléphone 2</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -30,9 +30,9 @@
                     <th scope="row" class="hidden-xs hidden-sm">{{i+1}}</th>
                     <td>{{ligne.nom | uppercase}}</td>
                     <td>{{ligne.prenom | titlecase}}</td>
-                    <td class="hidden-xs hidden-sm">{{ligne.ville | titlecase}}</td>
+                    <td class="hidden-xs hidden-sm hidden-md">{{ligne.ville | titlecase}}</td>
                     <td>{{ligne.telephone1 | telephonePipe}}</td>
-                    <td class="hidden-xs"><span *ngIf="ligne.telephone2">{{ligne.telephone2 | telephonePipe}}</span></td>
+                    <td class="hidden-xs hidden-sm"><span *ngIf="ligne.telephone2">{{ligne.telephone2 | telephonePipe}}</span></td>
                     <td>
                         <button class="btn btn-outline-secondary" (click)="onAfficherDetail(i)"><i class="fas fa-search"></i></button>
                     </td>
