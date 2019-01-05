@@ -8,6 +8,7 @@ import { CommandeModule } from './commande/commande.module';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LoginPageComponent } from './shared/login-page/login-page.component';
 import { SyntheseCdeComponent } from './commande/components/synthese-cde/synthese-cde.component';
 import { ContainerCdeComponent } from './commande/components/container-cde/container-cde.component';
 import { AjouterCdeComponent } from './commande/components/ajouter-cde/ajouter-cde.component';
@@ -19,6 +20,7 @@ import { ClientModule } from './client/client.module';
 registerLocaleData(localeFr);
 
 const appRoutes: Routes = [
+  { path: 'login', component: LoginPageComponent },
   { path: 'synthese', component: SyntheseCdeComponent },
   { path: 'commande/last', component: ContainerCdeComponent },
   { path: 'commande/detail/:id', component: ContainerCdeComponent },
@@ -28,10 +30,10 @@ const appRoutes: Routes = [
   { path: 'clients', component: ContainerClientComponent },
   { path: 'client/ajouter', component: AjouterClientComponent },
   { path: '',
-    redirectTo: 'commande/last',
+    redirectTo: 'login',
     pathMatch: 'full'
   },
-  { path: '**', component: SyntheseCdeComponent }
+  { path: '**', component: LoginPageComponent }
 ];
 
 @NgModule({
