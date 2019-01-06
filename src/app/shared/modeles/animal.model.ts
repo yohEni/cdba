@@ -1,11 +1,11 @@
 export class Animal {
-    constructor(public id: string,
-                public numeroNational: string,
-                public poidsEstime: string,
-                public poidsReel: string,
-                public auteurCreation: string,
-                public dateCreation: string,
-                public auteurModification: string,
-                public dateModification: string) {
+    constructor(public id: string = null,
+                public numeroNational: string = null,
+                public poidsEstime: string = null,
+                public poidsReel: string = null,
+                public auteurCreation: string = null,
+                public dateCreation: string = null,
+                public auteurModification: string = null,
+                public dateModification: string = null) {
     }
 }

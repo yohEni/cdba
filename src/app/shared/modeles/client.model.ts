@@ -1,18 +1,18 @@
 export class Client {
-    constructor(public id: string,
-        public nom: string,
-        public prenom: string,
-        public adresse: string,
-        public codePostal: string,
-        public ville: string,
-        public telephone1: string,
-        public telephone2: string,
-        public mail: string,
-        public aboNewsletter: string,
-        public motDePasse: string,
-        public auteurCreation: string,
-        public dateCreation: string,
-        public auteurModification: string,
-        public dateModification: string) {
+    constructor(public id: string = null,
+        public nom: string = null,
+        public prenom: string = null,
+        public adresse: string = null,
+        public codePostal: string = null,
+        public ville: string = null,
+        public telephone1: string = null,
+        public telephone2: string = null,
+        public mail: string = null,
+        public aboNewsletter: string = null,
+        public motDePasse: string = null,
+        public auteurCreation: string = null,
+        public dateCreation: string = null,
+        public auteurModification: string = null,
+        public dateModification: string = null) {
     }
 }

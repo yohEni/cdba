@@ -150,7 +150,9 @@ export class DetailCdeComponent implements OnInit, OnDestroy {
     this.lignesClientsCommandes.length = 0;
     this.getLignesCommandes(this.idCommande);
     // Appel de nouveau le tri pour éviter pb de la dernière ligne
+    // TOFIX
     this.trierLignesClientsCommandes();
     this.apresChangementEvent.emit();
+    // TOFIX : disparition affichage numCommande
   }
 }

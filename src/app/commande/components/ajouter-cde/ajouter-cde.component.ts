@@ -59,8 +59,8 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
       this.txtTitre = 'Modifier la commande';
       this.txtBtnAjouter = ' Modifier la commande';
     } else {
-      this.commande = new Commande('', '', '', '', '', '', '', '', '', '');
-      this.animal = new Animal('', '', '', '', '', '', '', '');
+      this.commande = new Commande();
+      this.animal = new Animal();
       this.modeModification = false;
       this.typeDate = 'E';
       this.typePoids = 'E';
@@ -68,6 +68,7 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
       this.txtBtnAjouter = ' Ajouter la commande';
     }
     // TODO : implémenter gestion statut
+    // TODO : FIX check formulaire
   }
 
   ngOnDestroy() {
@@ -86,9 +87,6 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
     this.setPoids();
     this.animal.auteurCreation = '1';
     this.animal.auteurModification = '1';
-    const date = new Date().toString();
-    this.animal.dateCreation = date;
-    this.animal.dateModification = date;
   }
 
   /**
@@ -110,9 +108,6 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
     this.commande.idStatut = '1';
     this.commande.auteurCreation = '1';
     this.commande.auteurModification = '1';
-    const date = new Date().toString();
-    this.commande.dateCreation = date;
-    this.commande.dateModification = date;
   }
 
   /**
@@ -132,7 +127,6 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
   private majAnimal(): void {
     // TODO : ne faire l'update de l'animal que si besoin
     this.setPoids();
-    this.animal.dateModification = new Date().toString();
     this.animal.auteurModification = '1';
     this.animalObservable = this.animalSrvService.updateAnimal(this.animal);
     this.animalSubscription = this.animalObservable.subscribe(
@@ -170,7 +164,6 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
    */
   private majCommande(): void {
     this.setDateLivraison();
-    this.commande.dateModification = new Date().toString();
     this.commande.auteurModification = '1';
     this.commandeObservable = this.commandeSrvService.updateCommande(this.commande);
     this.commandeSubscription = this.commandeObservable.subscribe(
@@ -219,8 +212,8 @@ export class AjouterCdeComponent implements OnInit, OnDestroy {
    * Envoi d'un event pour fermer
    */
   public onAnnuler(): void {
-    this.commande = new Commande('', '', '', '', '', '', '', '', '', '');
-    this.animal = new Animal('', '', '', '', '', '', '', '');
+    this.commande = new Commande();
+    this.animal = new Animal();
     this.annulerEvent.emit(event);
   }
 

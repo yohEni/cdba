@@ -37,7 +37,7 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
       this.modeModification = false;
       this.txtTitre = 'Ajouter un client';
       this.txtBtnAjouter = ' Ajouter le client';
-      this.client = new Client('', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+      this.client = new Client();
     }
     this.viewportScroller.scrollToAnchor('titreAjouterUnClient');
   }
@@ -55,7 +55,6 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
     this.msgKo = '';
     this.msgOk = '';
     if (this.modeModification) {
-      this.client.dateModification = new Date().toString();
       this.client.auteurModification = '1';
       this.updateClient();
     } else {
@@ -68,12 +67,8 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
    * Complète les infos du client
    */
   private setInfos(): void {
-    const date = new Date().toString();
-    this.client.dateCreation = date;
-    this.client.dateModification = date;
     this.client.auteurCreation = '1';
     this.client.auteurModification = '1';
-    this.client.aboNewsletter = '0';
   }
 
   /**
@@ -97,6 +92,9 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
     );
   }
 
+  /**
+   * Mise à jour du client
+   */
   private updateClient(): void {
     const clientEnJson: JSON = JSON.parse(JSON.stringify(this.client));
     this.clientObservable = this.clientSrvService.updateClient(clientEnJson);
@@ -105,6 +103,8 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
         if (!!c) {
           this.msgOk = 'Le client a été modifié avec succès';
           this.msgKo = '';
+          // TOFIX : récupérer la date et auteur de modification
+          // envoyer les infos plutôt que gérer uniquement par le back
           this.fermerAjoutClient.emit(this.client.id);
         }
       }, (error) => {
@@ -119,7 +119,7 @@ export class AjouterClientComponent implements OnInit, OnDestroy {
    * Annule l'ajout
    */
   private cancelAdd(): void {
-    this.client = new Client('', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+    this.client = new Client();
     this.fermerAjoutClient.emit(this.client.id);
   }
 

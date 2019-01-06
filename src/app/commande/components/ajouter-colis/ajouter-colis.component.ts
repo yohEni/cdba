@@ -32,8 +32,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   private ligneCommandeObservable;
   private ligneCommandeSubscription;
   public ligneCommande;
-  public isBourguignonTransforme: boolean;
-  public isPotAuFeuTransforme: boolean;
+  public isBourguignonTransforme = false;
+  public isPotAuFeuTransforme = false;
   private idLigneCommande: string;
 
   private prixEstimeObservable;
@@ -53,7 +53,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   public msgOk: string;
   public msgKo: string;
 
-  public modeModification: boolean;
+  public modeModification  = false;
 
   public showAjouterClient: boolean;
 
@@ -68,9 +68,9 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getClients();
     this.getStatuts();
-    this.ligneCommande = new LigneCommande('', this.idCommandeColis, '', '', '', '', '', '', '', '', '', '1', '', '', '', '', '', '', '');
-    this.isBourguignonTransforme = false;
-    this.isPotAuFeuTransforme = false;
+    this.ligneCommande = new LigneCommande();
+    this.ligneCommande.idCommande = this.idCommandeColis;
+    this.ligneCommande.idStatut = '1';
     this.viewportScroller.scrollToAnchor('titreAjouterUnColis');
     this.checkIfModif();
   }
@@ -113,7 +113,6 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       this.txtTitre = ' Modifier le colis';
       this.txtBtnAjouter = ' Modifier le colis';
     } else {
-      this.modeModification = false;
       this.txtTitre = ' Ajouter un colis';
       this.txtBtnAjouter = ' Ajouter le colis';
     }
@@ -166,10 +165,8 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
       const date = new Date().toString();
       if (!this.modeModification) {
         this.ligneCommande.dateCommande = date;
-        this.ligneCommande.dateCreation = date;
         this.ligneCommande.auteurCreation = 1;
       }
-      this.ligneCommande.dateModification = date;
       this.ligneCommande.auteurModification = 1;
       this.setPrixEstime();
     }
@@ -180,18 +177,20 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
    * Vérifie que le total de la transformation ne dépasse pas 100
    */
   private checkTransformation(): void {
-    if (this.ligneCommande.bourguignonSteakHache.length === 0) {
+    /*
+    if (!!this.ligneCommande.bourguignonSteakHache && this.ligneCommande.bourguignonSteakHache.length === 0) {
       this.ligneCommande.bourguignonSteakHache = 0;
     }
-    if (this.ligneCommande.bourguignonVrac.length === 0) {
+    if (!!this.ligneCommande.bourguignonVrac && this.ligneCommande.bourguignonVrac.length === 0) {
       this.ligneCommande.bourguignonVrac = 0;
     }
-    if (this.ligneCommande.potAuFeuSteakHache.length === 0) {
+    if (!!this.ligneCommande.potAuFeuSteakHache && this.ligneCommande.potAuFeuSteakHache.length === 0) {
       this.ligneCommande.potAuFeuSteakHache = 0;
     }
-    if (this.ligneCommande.potAuFeuVrac.length === 0) {
+    if (!!this.ligneCommande.potAuFeuVrac && this.ligneCommande.potAuFeuVrac.length === 0) {
       this.ligneCommande.potAuFeuVrac = 0;
     }
+    */
     if (this.ligneCommande.bourguignonSteakHache + this.ligneCommande.bourguignonVrac > 100) {
       this.msgKo = 'Le total de la transformation bourguignon ne peut pas dépasser 100%';
     }
@@ -304,7 +303,7 @@ export class AjouterColisComponent implements OnInit, OnDestroy {
           this.ligneFacture.id = f.insertedId;
         }
         this.setMsgOk('Colis ajouté avec succès');
-        this.apresAjout.emit();
+        // this.apresAjout.emit();
         // TODO : ou plutôt changer l'intitulé des boutons et proposer un update ?
       }, (error) => {
         console.log(error);

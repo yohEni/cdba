@@ -17,6 +17,7 @@ export class AuthService {
   constructor(private router: Router) { }
 
   login(user: User) {
+    // TODO : check BDD
     if (user.login !== '' && user.password !== '' ) {
       this.loggedIn.next(true);
       this.router.navigate(['/commande/last']);
