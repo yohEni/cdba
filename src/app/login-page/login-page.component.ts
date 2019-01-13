@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../auth/auth.service';
 
@@ -7,10 +7,12 @@ import { AuthService } from './../auth/auth.service';
   templateUrl: './login-page.component.html',
   styleUrls: ['./login-page.component.scss']
 })
-export class LoginPageComponent implements OnInit {
+export class LoginPageComponent implements OnInit, OnDestroy {
 
   public form: FormGroup;
   private formSubmitAttempt: boolean;
+  private logObservable;
+  private logSubscription;
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +24,12 @@ export class LoginPageComponent implements OnInit {
       login: ['', Validators.required],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnDestroy() {
+    if (!!this.logSubscription) {
+      this.logSubscription.unsubscribe();
+    }
   }
 
   /**
